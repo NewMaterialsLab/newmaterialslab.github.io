@@ -1,0 +1,427 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+
+/* 
+    global styles 
+*/
+html {
+    margin: 0;
+    color: #09091C;
+}
+
+section {
+    margin: 0px;
+    /* padding: 30px 0px; */
+}
+
+body {
+    margin: 50px 0px 0px 0px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F6F7FC;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+p {
+    line-height: 2.0;
+}
+
+footer {
+    padding: 60px 0px;
+    /* text-align: center; */
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h3 {
+    color: #33347B;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5em;
+    font-weight: 700;
+}
+
+hr {
+    border: 0;
+    clear:both;
+    display:block;
+    width: 96%;               
+    background-color:#d2d2d2;
+    height: 1px;
+}
+
+
+/* 
+    Navbar
+*/
+.navbar {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat', sans-serif;
+    z-index: 9001;    
+}
+
+
+.navbar__link-container {
+    margin-left: auto;
+}
+
+.navbar__link {
+    display: inline-block;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    margin-left: 15px;
+    color: inherit;
+}
+
+.navbar__link--active {
+    font-weight: 600;
+}
+
+.navbar__list-icon {
+    display: none;
+}
+
+.logo {
+    height: 60px;
+    float: left;
+}
+
+.logo-container {
+    align-items: center;
+    display: flex;
+    float: left;
+    height: 60px;
+}
+
+.logo-text {
+    color: #33347B;
+    padding-left: 10px;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 600px ) {
+    .navbar__link {
+        display: none;
+    }
+
+    .logo {
+        margin-left: 15px;
+    }
+
+    .logo-container {
+        padding-left: 15px;
+    }
+
+    .navbar__list-icon {
+        display: block;
+        float: right;
+        padding: 23px 16px 0px 0px;
+        color: #33347B;
+    }
+
+    .navbar--show-links .navbar__link {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+
+    .navbar--show-links .logo-container {
+        width: 100%;
+        display: inline-flex;
+        text-align: left;
+    }
+
+    .navbar--show-links  .navbar__link-container {
+        padding-top:0px;
+        width: 100%;
+    }
+
+    .navbar--show-links .navbar__list-icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+
+/*
+    Hero for landing page
+*/
+.hero {
+    background-image: url('../images/hero.svg');
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #fff;
+    padding: 0px !important;
+}
+
+.hero h1 {
+    color: #33347B;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.25em;
+    font-weight: 700;
+
+}
+
+.hero h2 {
+    font-weight: 500;
+    font-size: 1.5em;
+}
+
+.hero--title-text-bg {
+    background-color: rgba(255, 255, 255, 0.75);
+    padding: 0px 5px;
+    margin-bottom: 3px;
+}
+
+.hero p {
+    margin: 0px 0px 30px 0px;
+}
+
+.hero .flex-container {
+    height: 740px;
+}
+
+.hero .btn {
+    width: 20%;
+    color: white;
+    border-color: white;
+    background-color: transparent;
+}
+
+.hero .btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+}
+
+
+/* 
+    hero/banner on pages (e.g. publications, research)
+*/
+.page-hero {
+    background: linear-gradient(180deg, #F7E2E2 0%, #F4C5C5 100%), #F7E2E2;
+    /* border-radius: 0px 50px 50px 0px; */
+    margin-top: 60px;
+    padding-top: 30px;
+    margin-bottom: 80px;
+}
+
+/*
+    Wave and angles seen on landing page. 
+*/
+.wave {
+    height: 200px;
+    width: 100%;
+    background-image: url('../images/wave.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.angle-top {
+    height: 225px;
+    width: 100%;
+    background-image: url('../images/angle-top.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.angle-bottom {
+    height: 225px;
+    width: 100%;
+    background-image: url('../images/angle-bottom.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+/* buttons */
+.btn {
+    padding: 1em;
+    color: black;
+    text-decoration: none;
+    border: 3px solid black;
+    background-color: white;
+    font-family: 'Montserrat', sans-serif;
+
+}
+
+.btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.button-default {
+    background: #33347B;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    padding: 10px 60px;
+    margin-left: 20px;
+}
+
+
+/*  cards 
+    NOTE: currently not in use 
+*/
+.card {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 1px 2px 5px 0 rgba(52, 40, 22, 0.04), 0 1px 2px 0 rgba(53, 40, 22, 0.04);
+    margin-bottom: 12px;
+}
+
+.card img {
+    width: 100%;
+    margin: auto 0;
+}
+
+.card__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 10px 16px 10px;
+}
+
+.card__content h1 {
+    margin: 0px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+}
+
+
+/* 
+    style for people portraits
+*/
+.portrait-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.portrait-container > h4 {
+    margin-bottom: 15px;
+}
+
+.portrait-container > h5 {
+    margin: 0px;
+}
+
+/*
+    Containers for layout
+*/
+.flex-container {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.container {
+    margin: 0 auto;
+}
+
+.flex-container--space-evenly {
+    justify-content: space-evenly;
+}
+
+
+.flex-container--align-center {
+    align-items: center;
+}
+
+.flex-container--column {
+    flex-direction: column;
+}
+
+.flex-container--row-wrap {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.row {
+    width: 100%;
+}
+
+.row-50per {
+    width: 100%;
+    padding: 0px 15px;
+}
+
+
+@media screen and (min-width: 320px) {
+    .flex-container, .container {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .flex-container, .container {
+        max-width: 788px;
+    }
+
+    .flex-container .card {
+        margin: 15px;
+        width: calc(33% - 30px);
+    }
+
+    .row-50per {
+        width: 50%;
+        padding: 0px;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .flex-container, .container {
+        max-width: 1088px;
+    }
+
+}
+
+@media screen and (min-width: 1920px) {
+    .flex-container, .container {
+        max-width: 1600px;
+    }
+
+}
+
+
+/* 
+    miscellaneous
+*/
+
+.img--center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.inline-list {
+    margin: 0px;
+}
+
+ .inline-list li {
+     display: inline;
+ }
+
+ .inline-list--icons {
+    float:right;
+    height: 50px;
+    line-height: 50px;
+    font-size: 30px;
+    color: #807CDF;
+ }

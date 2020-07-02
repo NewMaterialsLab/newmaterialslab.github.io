@@ -1,0 +1,97 @@
+<html lang="en">
+    <head>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+    </head>
+    <nav id='navbar' class="navbar">
+        <div class="flex-container flex-container--row-wrap">
+            <a href="index.html" class="logo-container">
+                    <img src="images/logo.png" alt="logo" width="40" />
+                    <span class="logo-text" > New Materials Lab </span>
+            </a>
+
+            <div class="navbar__link-container">
+                <a class="navbar__link navbar__link--active" href="research.html"> Research </a>
+                <a class="navbar__link" href="publications.html"> Publications </a>
+                <!--<a class="navbar__link" href="index.html#people"> People </a> -->
+                <!--<a class="navbar__link" href="education.html"> Education </a> -->
+                <a href="javascript:void(0);" class="navbar__list-icon" onclick="toggleNavLinks()">
+                    <i class="fas fa-bars"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <body>
+        <section id="publications" class="page-hero" >
+            <div class="flex-container flex-container--align-center flex-container--space-evenly">
+                    <h3> Research </h3>  
+                    <img src="images/research-page-hero.svg" style="width:20%; margin-bottom: 20px;">
+            </div>
+        </section>
+        <section id="Research">
+            <article class="container">
+                <h2> Photosensitizing ferroelectric materials </h2>
+                <p>
+                    <img 
+                        src="images/photosensitizing_ferroelectric_materials.png"
+                        style="float: right; width:50%"
+                    />
+                </p>
+                <p>
+                    Solar energy is the most abundant source of clean and renewable energy with photovoltaics, PV, being the most promising technology in the coming decades. However, to make this technology competitive, significant improvements must be made in the efficiency of the solar cells and manufacturing costs must be reduced. PV device performance depends on three main features: i) efficient light absorption, ii) effective charge separation and iii) fast transport and charge extraction. Conventional solar cells based on p − n junctions and other new solar cell generations are good light harvesters, but they are limited by the Shockley-Queisser limit, because carriers are separated by the internal electric field at the p − n junction. This is not the case for ferroelectric materials, which present a spontaneous electric polarization, providing an alternative way to separate excited carriers.  Ferroelectric materials have emerged as a promising alternative to conventional photovoltaic materials in order to increase solar cell efficiency. Among them, oxide perovskites present the strongest spontaneous electric polarization and a wide range of thermal, chemical and mechanical stability. However, their band gap needs to be reduced in order for them to be considered efficient sun-light harvesters. 
+                </p>
+            </article>
+            <!--
+            <article class="container">
+                <h2> Some research stuff 2 </h2>
+                <p>
+                    <img 
+                        src="https://pubs.rsc.org/en/Image/Get?imageInfo.ImageType=GA&imageInfo.ImageIdentifier.ManuscriptID=C8CP03706J&imageInfo.ImageIdentifier.Year=2018"
+                        style="float: left;"
+                    />
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </article>
+            -->
+        </section>
+        <footer class="flex-container flex-container--row-wrap">
+
+            <ul class="inline-list" style="margin-right:auto">
+                <li ><img src="images/logos/europe.png" height=50 /></li>
+                <li style="margin: 0px 30px;"><img src="images/logos/mineco.png" height=50 /></li>
+                <li><img src="images/logos/junta.png" height= 50 /></li>
+            </ul>
+
+            <ul class=" inline-list inline-list--icons">
+                <li>
+                    <a href="https://www.facebook.com/New-Materials-Lab-204894653644394/">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </li>
+                <li style="margin: 0px 30px;">
+                    <a href="https://twitter.com/NewMaterialsLab">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/NewMaterialsLab">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <div style="text-align: center; margin-top:30px;width:100%">
+                © New Materials Lab 2020. All Rights Reserved
+            </div>
+        </footer>
+        <script src="js/navbar.js"></script>
+    </body>
+</html>
