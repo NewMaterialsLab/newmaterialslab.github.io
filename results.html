@@ -9,8 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Schibsted+Grotesk:wght@600;700&amp;display=swap">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main.css?v=46257945b2">
     <script>
+        document.documentElement.classList.add('js');
         try { var t = localStorage.getItem('nml-theme'); if (t) { document.documentElement.setAttribute('data-theme', t); } } catch (e) {}
     </script>
 </head>
@@ -31,12 +32,12 @@
                 <a href="index.html#people">Team</a>
             </nav>
             <div class="header-tools">
-                <button type="button" class="icon-button" id="theme-toggle" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+                <button type="button" class="icon-button js-only" id="theme-toggle" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
                     <span>Dark mode</span>
                 </button>
                 <button type="button" class="icon-button nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
                     <span>Menu</span>
                 </button>
             </div>
@@ -48,121 +49,132 @@
             <div class="container page-hero__inner">
                 <div class="page-hero__text">
                     <h1>Results</h1>
-                    <p>A selection of what our calculations show. Move the sliders to explore each figure.</p>
+                    <p>A selection of what our calculations show. Each figure is interactive: move a slider, pick a view, or point at a mark for its value.</p>
                 </div>
-                <svg class="emblem" viewBox="0 0 132 132" aria-hidden="true"><circle cx="32.4" cy="16.3" r="3.7" fill="#FA872F"></circle><circle cx="47.4" cy="15.2" r="3.7" fill="#ED643A"></circle><circle cx="62.4" cy="14.2" r="3.7" fill="#DB4352"></circle><circle cx="25.9" cy="29.7" r="3.7" fill="#FB9736"></circle><circle cx="40.8" cy="28.7" r="3.7" fill="#F57330"></circle><circle cx="55.8" cy="27.6" r="3.7" fill="#E35248"></circle><circle cx="19.3" cy="43.2" r="3.7" fill="#FCA83C"></circle><circle cx="34.3" cy="42.2" r="3.7" fill="#FA822D"></circle><circle cx="49.2" cy="41.1" r="3.7" fill="#EB603D"></circle><circle cx="64.2" cy="40.1" r="3.7" fill="#D93F55"></circle><circle cx="12.7" cy="56.7" r="3.7" fill="#FEB843"></circle><circle cx="27.7" cy="55.7" r="3.7" fill="#FB9334"></circle><circle cx="42.6" cy="54.6" r="3.7" fill="#F36F33"></circle><circle cx="57.6" cy="53.6" r="3.7" fill="#E14E4B"></circle><circle cx="6.1" cy="70.2" r="3.7" fill="#FFC94A"></circle><circle cx="21.1" cy="69.1" r="3.7" fill="#FCA33B"></circle><circle cx="36.1" cy="68.1" r="3.7" fill="#F97E2B"></circle><circle cx="51.0" cy="67.0" r="3.7" fill="#E95C40"></circle><circle cx="14.5" cy="82.6" r="3.7" fill="#FDB441"></circle><circle cx="29.5" cy="81.6" r="3.7" fill="#FA8E32"></circle><circle cx="44.5" cy="80.5" r="3.7" fill="#F06B36"></circle><circle cx="59.4" cy="79.5" r="3.7" fill="#DF4A4E"></circle><circle cx="22.9" cy="95.1" r="3.7" fill="#FC9F39"></circle><circle cx="37.9" cy="94.0" r="3.7" fill="#F8792B"></circle><circle cx="52.8" cy="93.0" r="3.7" fill="#E65843"></circle><circle cx="31.3" cy="107.5" r="3.7" fill="#FA8A30"></circle><circle cx="46.3" cy="106.4" r="3.7" fill="#EE6739"></circle><circle cx="61.2" cy="105.4" r="3.7" fill="#DC4651"></circle><circle cx="39.7" cy="119.9" r="3.7" fill="#F6752E"></circle><circle cx="54.7" cy="118.9" r="3.7" fill="#E45446"></circle><circle cx="84.6" cy="15.2" r="3.7" fill="#A12F76"></circle><circle cx="99.6" cy="16.3" r="3.7" fill="#782D8E"></circle><circle cx="76.2" cy="27.6" r="3.7" fill="#BC3368"></circle><circle cx="91.2" cy="28.7" r="3.7" fill="#8D2D80"></circle><circle cx="106.1" cy="29.7" r="3.7" fill="#71359A"></circle><circle cx="82.8" cy="41.1" r="3.7" fill="#A73073"></circle><circle cx="97.7" cy="42.2" r="3.7" fill="#792B8B"></circle><circle cx="112.7" cy="43.2" r="3.7" fill="#6A3DA6"></circle><circle cx="74.4" cy="53.6" r="3.7" fill="#C13466"></circle><circle cx="89.4" cy="54.6" r="3.7" fill="#932D7D"></circle><circle cx="104.3" cy="55.7" r="3.7" fill="#733397"></circle><circle cx="119.3" cy="56.7" r="3.7" fill="#6346B2"></circle><circle cx="66.0" cy="66.0" r="3.7" fill="#D73B58"></circle><circle cx="81.0" cy="67.0" r="3.7" fill="#AD3170"></circle><circle cx="95.9" cy="68.1" r="3.7" fill="#7E2B88"></circle><circle cx="110.9" cy="69.1" r="3.7" fill="#6C3BA3"></circle><circle cx="72.6" cy="79.5" r="3.7" fill="#C73463"></circle><circle cx="87.5" cy="80.5" r="3.7" fill="#982E7B"></circle><circle cx="102.5" cy="81.6" r="3.7" fill="#743194"></circle><circle cx="117.5" cy="82.6" r="3.7" fill="#6543AF"></circle><circle cx="79.2" cy="93.0" r="3.7" fill="#B2326D"></circle><circle cx="94.1" cy="94.0" r="3.7" fill="#842B85"></circle><circle cx="109.1" cy="95.1" r="3.7" fill="#6E399F"></circle><circle cx="70.8" cy="105.4" r="3.7" fill="#CD3560"></circle><circle cx="85.7" cy="106.4" r="3.7" fill="#9E2F78"></circle><circle cx="100.7" cy="107.5" r="3.7" fill="#762E90"></circle><circle cx="77.3" cy="118.9" r="3.7" fill="#B8326A"></circle><circle cx="92.3" cy="119.9" r="3.7" fill="#892C82"></circle></svg>
+                <svg class="emblem" viewBox="0 0 132 132" width="96" height="96" aria-hidden="true"><circle cx="32.4" cy="16.3" r="3.7" fill="#FA872F"></circle><circle cx="47.4" cy="15.2" r="3.7" fill="#ED643A"></circle><circle cx="62.4" cy="14.2" r="3.7" fill="#DB4352"></circle><circle cx="25.9" cy="29.7" r="3.7" fill="#FB9736"></circle><circle cx="40.8" cy="28.7" r="3.7" fill="#F57330"></circle><circle cx="55.8" cy="27.6" r="3.7" fill="#E35248"></circle><circle cx="19.3" cy="43.2" r="3.7" fill="#FCA83C"></circle><circle cx="34.3" cy="42.2" r="3.7" fill="#FA822D"></circle><circle cx="49.2" cy="41.1" r="3.7" fill="#EB603D"></circle><circle cx="64.2" cy="40.1" r="3.7" fill="#D93F55"></circle><circle cx="12.7" cy="56.7" r="3.7" fill="#FEB843"></circle><circle cx="27.7" cy="55.7" r="3.7" fill="#FB9334"></circle><circle cx="42.6" cy="54.6" r="3.7" fill="#F36F33"></circle><circle cx="57.6" cy="53.6" r="3.7" fill="#E14E4B"></circle><circle cx="6.1" cy="70.2" r="3.7" fill="#FFC94A"></circle><circle cx="21.1" cy="69.1" r="3.7" fill="#FCA33B"></circle><circle cx="36.1" cy="68.1" r="3.7" fill="#F97E2B"></circle><circle cx="51.0" cy="67.0" r="3.7" fill="#E95C40"></circle><circle cx="14.5" cy="82.6" r="3.7" fill="#FDB441"></circle><circle cx="29.5" cy="81.6" r="3.7" fill="#FA8E32"></circle><circle cx="44.5" cy="80.5" r="3.7" fill="#F06B36"></circle><circle cx="59.4" cy="79.5" r="3.7" fill="#DF4A4E"></circle><circle cx="22.9" cy="95.1" r="3.7" fill="#FC9F39"></circle><circle cx="37.9" cy="94.0" r="3.7" fill="#F8792B"></circle><circle cx="52.8" cy="93.0" r="3.7" fill="#E65843"></circle><circle cx="31.3" cy="107.5" r="3.7" fill="#FA8A30"></circle><circle cx="46.3" cy="106.4" r="3.7" fill="#EE6739"></circle><circle cx="61.2" cy="105.4" r="3.7" fill="#DC4651"></circle><circle cx="39.7" cy="119.9" r="3.7" fill="#F6752E"></circle><circle cx="54.7" cy="118.9" r="3.7" fill="#E45446"></circle><circle cx="84.6" cy="15.2" r="3.7" fill="#A12F76"></circle><circle cx="99.6" cy="16.3" r="3.7" fill="#782D8E"></circle><circle cx="76.2" cy="27.6" r="3.7" fill="#BC3368"></circle><circle cx="91.2" cy="28.7" r="3.7" fill="#8D2D80"></circle><circle cx="106.1" cy="29.7" r="3.7" fill="#71359A"></circle><circle cx="82.8" cy="41.1" r="3.7" fill="#A73073"></circle><circle cx="97.7" cy="42.2" r="3.7" fill="#792B8B"></circle><circle cx="112.7" cy="43.2" r="3.7" fill="#6A3DA6"></circle><circle cx="74.4" cy="53.6" r="3.7" fill="#C13466"></circle><circle cx="89.4" cy="54.6" r="3.7" fill="#932D7D"></circle><circle cx="104.3" cy="55.7" r="3.7" fill="#733397"></circle><circle cx="119.3" cy="56.7" r="3.7" fill="#6346B2"></circle><circle cx="66.0" cy="66.0" r="3.7" fill="#D73B58"></circle><circle cx="81.0" cy="67.0" r="3.7" fill="#AD3170"></circle><circle cx="95.9" cy="68.1" r="3.7" fill="#7E2B88"></circle><circle cx="110.9" cy="69.1" r="3.7" fill="#6C3BA3"></circle><circle cx="72.6" cy="79.5" r="3.7" fill="#C73463"></circle><circle cx="87.5" cy="80.5" r="3.7" fill="#982E7B"></circle><circle cx="102.5" cy="81.6" r="3.7" fill="#743194"></circle><circle cx="117.5" cy="82.6" r="3.7" fill="#6543AF"></circle><circle cx="79.2" cy="93.0" r="3.7" fill="#B2326D"></circle><circle cx="94.1" cy="94.0" r="3.7" fill="#842B85"></circle><circle cx="109.1" cy="95.1" r="3.7" fill="#6E399F"></circle><circle cx="70.8" cy="105.4" r="3.7" fill="#CD3560"></circle><circle cx="85.7" cy="106.4" r="3.7" fill="#9E2F78"></circle><circle cx="100.7" cy="107.5" r="3.7" fill="#762E90"></circle><circle cx="77.3" cy="118.9" r="3.7" fill="#B8326A"></circle><circle cx="92.3" cy="119.9" r="3.7" fill="#892C82"></circle></svg>
             </div>
         </section>
-        <section class="container" id="results">
-            <article class="result">
-                <div class="result__text">
+        <section class="container results-grid" id="results" data-results="data/results.json?v=3092131c5f" data-uhtc="data/uhtc.json?v=d313fdffef">
+            <article class="card" id="training">
+                <div class="card__head">
                     <ul class="tags"><li class="tag">Thermoelectrics</li><li class="tag">Machine learning</li></ul>
                     <h2>A handful of calculations is enough to train the model</h2>
                     <p>We predict the lattice thermal conductivity of CoSb<sub>3</sub> with a machine learning model trained on a small number of supercell calculations. The error in the forces drops quickly, and the conductivity settles from about eight supercells.</p>
-                    <p class="caption">Dashed lines mark the conductivity obtained with the traditional approach using the LDA and PBE functionals. Experimental values reported for CoSb<sub>3</sub> are around 10 W/(m·K).</p>
                 </div>
-                <div class="widget">
-                    <div class="control">
-                        <label for="conv-n">Training set</label>
-                        <input type="range" id="conv-n" min="0" max="7" step="1" value="3">
-                        <output id="conv-n-value" for="conv-n"></output>
+                <figure class="fig" id="fig-training">
+                    <div class="controls js-only">
+                        <div class="control"><label for="conv-n">Supercells</label><input type="range" id="conv-n" min="0" max="7" step="1" value="2"><output id="conv-n-value" for="conv-n">8</output></div>
                     </div>
-                    <dl class="readout">
-                        <div><dd style="margin:0"><strong id="conv-kappa">–</strong></dd><dt><span>Lattice thermal conductivity, W/(m·K)</span></dt></div>
-                        <div><dd style="margin:0"><strong id="conv-rmse">–</strong></dd><dt><span>Force error (RMSE), meV/Å</span></dt></div>
-                    </dl>
-                    <div class="chart" id="conv-chart-kappa">Loading the data</div>
-                    <div class="chart" id="conv-chart-rmse"></div>
-                </div>
+                    <p class="readout js-only"><span><b id="conv-kappa">9.3</b>W/(m·K)</span><span><b id="conv-rmse">11.8</b>meV/Å force error (RMSE)</span></p>
+                    <div class="chart fig__plot" id="conv-chart"><p class="fig__fallback" hidden>This interactive figure needs JavaScript. </p>
+                        <table class="data nojs-only" hidden><thead><tr><th scope="col">Supercells</th><th scope="col">κ, W/(m·K)</th><th scope="col">Force error (RMSE), meV/Å</th></tr></thead><tbody><tr><td>4</td><td>1.8</td><td>61.9</td></tr><tr><td>6</td><td>9.7</td><td>25.0</td></tr><tr><td>8</td><td>9.3</td><td>11.8</td></tr><tr><td>10</td><td>9.1</td><td>11.3</td></tr><tr><td>12</td><td>9.1</td><td>10.5</td></tr><tr><td>14</td><td>9.2</td><td>10.3</td></tr><tr><td>16</td><td>9.2</td><td>9.9</td></tr><tr><td>18</td><td>9.2</td><td>9.6</td></tr></tbody></table>
+                    </div>
+                    <figcaption class="fig__caption">The traditional approach gives 9.8 W/(m·K) with the LDA functional and 7.8 W/(m·K) with PBE<span class="js-only"> (dashed lines)</span>. Experimental values reported for CoSb<sub>3</sub> are around 10 W/(m·K).</figcaption>
+                </figure>
             </article>
 
-            <article class="result">
-                <div class="result__text">
+            <article class="card" id="zt">
+                <div class="card__head">
                     <ul class="tags"><li class="tag">Thermoelectrics</li></ul>
                     <h2>Where p-type CoSb<sub>3</sub> works best</h2>
-                    <p>The thermoelectric figure of merit, zT, depends on temperature and on how many charge carriers the material has. This map shows the calculated zT of p-type CoSb<sub>3</sub>. It peaks near 1.0 at high temperature and a carrier concentration around 2 × 10<sup>19</sup> cm<sup>−3</sup>.</p>
-                    <p class="caption" id="zt-note">The values are read back from the colour scale of our original figure, so they are approximate. Point at the map or use the sliders.</p>
+                    <p>The thermoelectric figure of merit, zT, depends on temperature and on how many charge carriers the material has. The calculated zT of p-type CoSb<sub>3</sub> peaks near 1.0 at high temperature and a carrier concentration around 2 × 10<sup>19</sup> cm<sup>−3</sup>.</p>
                 </div>
-                <div class="widget widget--panel">
-                    <dl class="readout">
-                        <div><dd style="margin:0"><strong id="zt-value">–</strong></dd><dt><span>zT</span></dt></div>
-                        <div><dd style="margin:0"><strong id="zt-t-value">–</strong></dd><dt><span>Temperature</span></dt></div>
-                        <div><dd style="margin:0"><strong id="zt-n-value">–</strong></dd><dt><span>Carrier concentration</span></dt></div>
-                    </dl>
-                    <div class="heatmap"><canvas id="zt-canvas" role="img" aria-label="Colour map of the figure of merit zT of p-type CoSb3 against temperature, 300 to 1000 K, and carrier concentration, 10 to the 17 to 10 to the 20 per cubic centimetre. The readout above gives the value at the selected point."></canvas></div>
-                    <div class="ramp"><span>zT 0</span><i></i><span>1.0</span></div>
-                    <div class="control"><label for="zt-t">Temperature</label><input type="range" id="zt-t" min="0" max="56" step="1" value="56"></div>
-                    <div class="control"><label for="zt-n">Carriers</label><input type="range" id="zt-n" min="0" max="48" step="1" value="37"></div>
-                </div>
+                <figure class="fig fig--dark" id="fig-zt">
+                    <div class="readout js-only" id="zt-readout"><span><b id="zt-value">1.01</b>zT <span id="zt-where">at 1000 K and 2.1 × 10¹⁹ cm⁻³</span></span><span class="ramp"><span>0</span><i></i><span>1.0</span></span></div>
+                    <div class="heatmap js-only"><canvas id="zt-canvas" tabindex="0" role="img" aria-label="Colour map of the figure of merit zT of p-type CoSb3 against temperature, 300 to 1000 K, and carrier concentration, 10 to the 17 to 10 to the 20 per cubic centimetre. Use the arrow keys to move the marker; the readout above gives the value."></canvas></div>
+                    <div class="nojs-only" hidden><a class="zoom" href="images/results-cosb3-zt.png" aria-label="Enlarge: Colour map of zT of p-type CoSb3 against temperature and carrier concentration"><img src="images/results-cosb3-zt.png" alt="Colour map of zT of p-type CoSb3 against temperature and carrier concentration" width="760" height="564" loading="lazy"></a></div>
+                    <div class="controls js-only">
+                        <div class="control"><label for="zt-t">Temperature</label><input type="range" id="zt-t" min="0" max="56" step="1" value="56"><output id="zt-t-out" for="zt-t">1000 K</output></div>
+                        <div class="control"><label for="zt-n">Carriers</label><input type="range" id="zt-n" min="0" max="48" step="1" value="37"><output id="zt-n-out" for="zt-n">2.1 × 10¹⁹</output></div>
+                    </div>
+                    <figcaption class="fig__caption">Values are read back from the colour scale of our original figure, so they are approximate.<span class="js-only"> Point at the map, use the sliders, or select the map and use the arrow keys.</span></figcaption>
+                </figure>
             </article>
 
-            <article class="result">
-                <div class="result__text">
+            <article class="card" id="transport">
+                <div class="card__head">
                     <ul class="tags"><li class="tag">Thermoelectrics</li></ul>
                     <h2>Transport coefficients next to experiment</h2>
                     <p>Resistivity, Seebeck coefficient and power factor of CoSb<sub>3</sub> across six orders of magnitude in carrier concentration, for both p-type and n-type material.</p>
                 </div>
-                <figure class="figure">
-                    <button type="button" class="zoom zoom--tall" data-full="images/results-cosb3-transport.png" aria-label="Enlarge the figure"><img src="images/results-cosb3-transport.png" alt="Three stacked plots of resistivity, Seebeck coefficient and power factor of CoSb3 against carrier concentration, calculated and experimental" width="762" height="1438" loading="lazy"></button>
-                    <figcaption>Resistivity (<i>ρ</i>), Seebeck coefficient (<i>S</i>) and power factor (<i>PF</i>) of CoSb<sub>3</sub>. Empty circles are experimental data for monocrystalline samples; filled circles are values calculated with AMSET. Green is p-type, blue is n-type.</figcaption>
+                <figure class="fig" id="fig-transport">
+                    <div class="fig__bar js-only">
+                        <p class="fig__title" id="tr-title"><span id="tr-name">Seebeck coefficient, S</span> <span class="unit" id="tr-unit">µV/K</span></p>
+                        <div class="seg" id="tr-views" role="group" aria-label="Quantity to show">
+                            <button type="button" data-value="rho" aria-pressed="false">Resistivity</button>
+                            <button type="button" data-value="seebeck" aria-pressed="true">Seebeck</button>
+                            <button type="button" data-value="pf" aria-pressed="false">Power factor</button>
+                        </div>
+                    </div>
+                    <ul class="legend js-only" id="tr-legend"></ul>
+                    <div class="chart fig__plot" id="tr-chart"><p class="fig__fallback" hidden>This interactive figure needs JavaScript. This is the original figure:</p>
+                        <div class="nojs-only" hidden><a class="zoom" href="images/results-cosb3-transport.png" aria-label="Enlarge: Three stacked plots of resistivity, Seebeck coefficient and power factor of CoSb3 against carrier concentration, calculated and experimental"><img src="images/results-cosb3-transport.png" alt="Three stacked plots of resistivity, Seebeck coefficient and power factor of CoSb3 against carrier concentration, calculated and experimental" width="762" height="1438" loading="lazy"></a></div>
+                    </div>
+                    <figcaption class="fig__caption">Filled circles are values calculated with AMSET; empty circles are experimental data for monocrystalline samples. Points are read from our original vector figure, where green is p-type and blue is n-type. <a href="images/results-cosb3-transport.png">See the original figure</a>.</figcaption>
+                    <details class="values js-only">
+                        <summary>Show the values</summary>
+                        <div class="table-scroll"><table class="data" id="tr-table"></table></div>
+                    </details>
                 </figure>
             </article>
 
-            <article class="result">
-                <div class="result__text">
+            <article class="card" id="tib2">
+                <div class="card__head">
                     <ul class="tags"><li class="tag">Ceramics</li></ul>
                     <h2>Calculated elastic constants of TiB<sub>2</sub> next to experiment</h2>
                     <p>Our high-throughput framework predicts how elastic constants change with temperature. For TiB<sub>2</sub> the calculated lines can be compared directly with measurements up to about 1500 K.</p>
-                    <p class="caption">Lines come from our published data set. Circles are the experimental values plotted in our comparison figure. Hover over a circle for its value.</p>
-                    <div class="button-row"><a class="button button--ghost button--small" href="downloads.html#explorer">Plot the other eight ceramics</a></div>
                 </div>
-                <div class="widget">
-                    <p class="chart-title">Elastic constants of TiB₂ (GPa)</p>
-                    <ul class="legend" id="tib2-legend"></ul>
-                    <div class="chart" id="tib2-chart">Loading the data</div>
-                </div>
+                <figure class="fig" id="fig-tib2">
+                    <div class="fig__bar"><p class="fig__title">Elastic constants of TiB₂ <span class="unit">GPa</span></p><ul class="legend js-only" id="tib2-legend"></ul></div>
+                    <div class="chart fig__plot" id="tib2-chart"><p class="fig__fallback" hidden>This interactive figure needs JavaScript. The experimental values are in the table below.</p></div>
+                    <figcaption class="fig__caption">Calculated lines and experimental circles are both read from our published comparison figure.<span class="js-only"> Point at a circle for its value.</span> <a href="downloads.html#explorer">Plot the calculated constants of all nine ceramics</a>.</figcaption>
+                    <details class="values">
+                        <summary>Show the experimental values</summary>
+                        <div class="table-scroll"><table class="data"><thead><tr><th scope="col">Constant</th><th scope="col">T (K)</th><th scope="col">Experiment (GPa)</th></tr></thead><tbody><tr><th scope="row">C₁₁</th><td>299</td><td>656</td></tr><tr><th scope="row">C₁₁</th><td>375</td><td>654</td></tr><tr><th scope="row">C₁₁</th><td>476</td><td>648</td></tr><tr><th scope="row">C₁₁</th><td>572</td><td>641</td></tr><tr><th scope="row">C₁₁</th><td>679</td><td>636</td></tr><tr><th scope="row">C₁₁</th><td>774</td><td>628</td></tr><tr><th scope="row">C₁₁</th><td>872</td><td>628</td></tr><tr><th scope="row">C₁₁</th><td>974</td><td>627</td></tr><tr><th scope="row">C₁₁</th><td>1077</td><td>622</td></tr><tr><th scope="row">C₁₁</th><td>1170</td><td>616</td></tr><tr><th scope="row">C₁₁</th><td>1269</td><td>612</td></tr><tr><th scope="row">C₁₁</th><td>1372</td><td>608</td></tr><tr><th scope="row">C₃₃</th><td>296</td><td>454</td></tr><tr><th scope="row">C₃₃</th><td>369</td><td>454</td></tr><tr><th scope="row">C₃₃</th><td>469</td><td>449</td></tr><tr><th scope="row">C₃₃</th><td>570</td><td>446</td></tr><tr><th scope="row">C₃₃</th><td>668</td><td>442</td></tr><tr><th scope="row">C₃₃</th><td>770</td><td>440</td></tr><tr><th scope="row">C₃₃</th><td>868</td><td>437</td></tr><tr><th scope="row">C₃₃</th><td>969</td><td>434</td></tr><tr><th scope="row">C₃₃</th><td>1067</td><td>431</td></tr><tr><th scope="row">C₃₃</th><td>1168</td><td>428</td></tr><tr><th scope="row">C₃₃</th><td>1266</td><td>424</td></tr><tr><th scope="row">C₃₃</th><td>1367</td><td>420</td></tr><tr><th scope="row">C₄₄</th><td>299</td><td>264</td></tr><tr><th scope="row">C₄₄</th><td>373</td><td>262</td></tr><tr><th scope="row">C₄₄</th><td>473</td><td>258</td></tr><tr><th scope="row">C₄₄</th><td>573</td><td>255</td></tr><tr><th scope="row">C₄₄</th><td>673</td><td>252</td></tr><tr><th scope="row">C₄₄</th><td>773</td><td>249</td></tr><tr><th scope="row">C₄₄</th><td>872</td><td>247</td></tr><tr><th scope="row">C₄₄</th><td>972</td><td>244</td></tr><tr><th scope="row">C₄₄</th><td>1072</td><td>242</td></tr><tr><th scope="row">C₄₄</th><td>1173</td><td>238</td></tr><tr><th scope="row">C₄₄</th><td>1271</td><td>236</td></tr><tr><th scope="row">C₄₄</th><td>1372</td><td>233</td></tr><tr><th scope="row">C₁₃</th><td>301</td><td>98</td></tr><tr><th scope="row">C₁₃</th><td>374</td><td>100</td></tr><tr><th scope="row">C₁₃</th><td>473</td><td>98</td></tr><tr><th scope="row">C₁₃</th><td>573</td><td>99</td></tr><tr><th scope="row">C₁₃</th><td>673</td><td>98</td></tr><tr><th scope="row">C₁₃</th><td>773</td><td>98</td></tr><tr><th scope="row">C₁₃</th><td>872</td><td>98</td></tr><tr><th scope="row">C₁₃</th><td>972</td><td>98</td></tr><tr><th scope="row">C₁₃</th><td>1072</td><td>97</td></tr><tr><th scope="row">C₁₃</th><td>1172</td><td>98</td></tr><tr><th scope="row">C₁₃</th><td>1271</td><td>97</td></tr><tr><th scope="row">C₁₃</th><td>1371</td><td>97</td></tr><tr><th scope="row">C₁₃</th><td>1436</td><td>96</td></tr><tr><th scope="row">C₁₂</th><td>299</td><td>59</td></tr><tr><th scope="row">C₁₂</th><td>373</td><td>58</td></tr><tr><th scope="row">C₁₂</th><td>473</td><td>58</td></tr><tr><th scope="row">C₁₂</th><td>573</td><td>57</td></tr><tr><th scope="row">C₁₂</th><td>673</td><td>58</td></tr><tr><th scope="row">C₁₂</th><td>773</td><td>56</td></tr><tr><th scope="row">C₁₂</th><td>872</td><td>57</td></tr><tr><th scope="row">C₁₂</th><td>972</td><td>60</td></tr><tr><th scope="row">C₁₂</th><td>1072</td><td>62</td></tr><tr><th scope="row">C₁₂</th><td>1173</td><td>62</td></tr><tr><th scope="row">C₁₂</th><td>1271</td><td>62</td></tr><tr><th scope="row">C₁₂</th><td>1372</td><td>62</td></tr></tbody></table></div>
+                    </details>
+                </figure>
             </article>
 
-            <article class="result">
-                <div class="result__text">
+            <article class="card" id="ceramics">
+                <div class="card__head">
                     <ul class="tags"><li class="tag">Ceramics</li></ul>
                     <h2>Nine ceramics at the temperature you choose</h2>
-                    <p>Polycrystalline moduli (Hill average) of the nine ultrahigh-temperature ceramics in our data set. Move the slider to heat them up. The grey mark shows where each one started at 0 K.</p>
+                    <p>Polycrystalline moduli (Hill average) of the nine ultrahigh-temperature ceramics in our data set. Move the slider to heat them up.</p>
                 </div>
-                <div class="widget">
-                    <div class="control">
-                        <label for="cer-prop">Property</label>
-                        <select id="cer-prop"><option value="Young">Young's modulus</option><option value="shear">Shear modulus</option><option value="bulk">Bulk modulus</option></select>
+                <figure class="fig" id="fig-ceramics">
+                    <div class="controls js-only">
+                        <div class="control"><label for="cer-prop">Property</label><select id="cer-prop"><option value="Young">Young's modulus</option><option value="shear">Shear modulus</option><option value="bulk">Bulk modulus</option></select></div>
+                        <div class="control"><label for="cer-t">Temperature</label><input type="range" id="cer-t" min="0" max="300" step="5" value="30"><output id="cer-t-value" for="cer-t">300 K</output></div>
                     </div>
-                    <div class="control">
-                        <label for="cer-t">Temperature</label>
-                        <input type="range" id="cer-t" min="0" max="300" step="1" value="30">
-                        <output id="cer-t-value" for="cer-t"></output>
-                    </div>
-                    <ul class="legend" id="cer-legend"></ul>
-                    <div class="chart" id="cer-chart">Loading the data</div>
-                </div>
+                    <ul class="legend js-only" id="cer-legend"></ul>
+                    <div class="chart fig__plot" id="cer-chart"><p class="fig__fallback" hidden>This interactive figure needs JavaScript. The values are in <a href="downloads.html#data">our data set</a>.</p></div>
+                    <figcaption class="fig__caption"><span class="js-only">The thin vertical tick by each bar shows where that ceramic started at 0 K.</span></figcaption>
+                </figure>
             </article>
 
-            <article class="result">
-                <div class="result__text">
+            <article class="card" id="scattering">
+                <div class="card__head">
                     <ul class="tags"><li class="tag">Thermoelectrics</li><li class="tag">Preliminary</li></ul>
                     <h2>Which atoms scatter the heat</h2>
                     <p>To understand a lattice thermal conductivity we split the phonon scattering into the contribution of each element in the material.</p>
-                    <figure class="figure">
+                </div>
+                <figure class="fig" id="fig-scattering">
+                    <div class="fig__bar js-only">
+                        <div class="seg" id="sc-views" role="group" aria-label="Panel to show"><button type="button" data-value="compound" aria-pressed="true">Cu₃TaTe₄</button><button type="button" data-value="ta" aria-pressed="false">Ta</button><button type="button" data-value="te" aria-pressed="false">4Te</button><button type="button" data-value="cu" aria-pressed="false">3Cu</button></div>
+                    </div>
+                    <div class="fig__plot"><a class="zoom zoom--panel" href="images/results-cu3tate4-scattering.png" aria-label="Enlarge: Colour map of phonon scattering time against frequency for Cu3TaTe4"><img src="images/results-cu3tate4-compound.png" alt="Colour map of phonon scattering time against frequency for Cu3TaTe4" width="358" height="228" loading="lazy"></a></div>
+                    <figcaption class="fig__caption">Preliminary results for Cu<sub>3</sub>TaTe<sub>4</sub>: phonon frequency against phonon scattering time, <i>τ</i><sub>RTA</sub>, for the compound and its projection on each element.<span class="js-only"> Pick a panel above; select the image to see all four together.</span></figcaption>
+                    <details class="how">
+                        <summary>How it is computed</summary>
                         <div class="tree" role="group" aria-label="Workflow: second and third order force constants feed the atomic phonon decomposition, the phonon delocalization and the BTE solver, which give the lattice thermal conductivity">
                             <div class="tree__level"><span class="node">2<sup>nd</sup> order IFCs</span><span class="node">3<sup>rd</sup> order IFCs</span></div>
                             <div class="tree__join"></div>
-                            <div class="tree__level"><span class="node node--result">Atomic phonon decomposition</span><span class="node node--result">Phonon delocalization</span><span class="node node--result">BTE solver</span></div>
+                            <div class="tree__level tree__level--branch"><span class="node node--result">Atomic phonon decomposition</span><span class="node node--result">Phonon delocalization</span><span class="node node--result">BTE solver</span></div>
                             <div class="tree__join"></div>
                             <div class="tree__level"><span class="node">Lattice thermal conductivity</span></div>
                         </div>
-                        <figcaption>Workflow for the phonon analysis combined with the BTE solver, AAPL.</figcaption>
-                    </figure>
-                </div>
-                <figure class="figure">
-                    <button type="button" class="zoom" data-full="images/results-cu3tate4-scattering.png" aria-label="Enlarge the figure"><img src="images/results-cu3tate4-scattering.png" alt="Four colour maps of phonon scattering time against frequency for Cu3TaTe4 and its projections on Ta, Te and Cu" width="726" height="463" loading="lazy"></button>
-                    <figcaption>Preliminary results for Cu<sub>3</sub>TaTe<sub>4</sub>: phonon frequency against phonon scattering time, <i>τ</i><sub>RTA</sub>, for the compound and its projection on each element.</figcaption>
+                        <p class="fig__caption">Workflow for the phonon analysis combined with the BTE solver, AAPL.</p>
+                    </details>
                 </figure>
             </article>
         </section>
@@ -184,7 +196,7 @@
         </div>
     </footer>
 
-    <script src="js/site.js"></script>
-    <script src="js/results.js"></script>
+    <script src="js/site.js?v=4da8f515f2" onerror="document.documentElement.classList.add('js-failed')"></script>
+    <script src="js/results.js?v=bb73684b86" onerror="document.documentElement.classList.add('js-failed')"></script>
 </body>
 </html>

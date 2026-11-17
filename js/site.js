@@ -32,6 +32,9 @@
     var header = document.querySelector('.site-header');
     var navButton = document.getElementById('nav-toggle');
     if (header && navButton) {
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && header.classList.contains('is-open')) { navButton.click(); navButton.focus(); }
+        });
         navButton.addEventListener('click', function () {
             var open = header.classList.toggle('is-open');
             navButton.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -157,6 +160,9 @@
     document.addEventListener('click', function (event) {
         var trigger = event.target.closest('.zoom');
         if (!trigger) { return; }
+        /* Without showModal the link simply opens the image. */
+        if (!window.HTMLDialogElement || !HTMLDialogElement.prototype.showModal) { return; }
+        event.preventDefault();
         if (!dialog) {
             dialog = document.createElement('dialog');
             dialog.className = 'lightbox';
@@ -172,8 +178,12 @@
             document.body.appendChild(dialog);
         }
         var img = dialog.querySelector('img');
-        img.src = trigger.getAttribute('data-full');
+        img.removeAttribute('src');
+        img.src = trigger.getAttribute('href');
         img.alt = trigger.querySelector('img').alt;
-        if (dialog.showModal) { dialog.showModal(); } else { window.open(img.src, '_blank'); }
+        dialog.classList.toggle('lightbox--photo', trigger.classList.contains('zoom--cover'));
+        dialog.showModal();
+        dialog.scrollTop = 0;
+        dialog.scrollLeft = 0;
     });
 })();
