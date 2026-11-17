@@ -1,220 +1,237 @@
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="css/main.css">
-    </head>
-    <nav id='navbar' class="navbar">
-        <div class="flex-container flex-container--row-wrap">
-            <a href="index.html" class="logo-container">
-                    <img src="images/logo.png" alt="logo" width="40" />
-                    <span class="logo-text" > New Materials Lab </span>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Publications | New Materials Lab</title>
+    <meta name="description" content="All publications from New Materials Lab, with abstracts, links and downloadable data.">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Schibsted+Grotesk:wght@600;700&amp;display=swap">
+    <link rel="stylesheet" href="css/main.css">
+    <script>
+        try { var t = localStorage.getItem('nml-theme'); if (t) { document.documentElement.setAttribute('data-theme', t); } } catch (e) {}
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <a class="brand" href="index.html">
+                <img src="images/logo.png" alt="" width="34" height="34">
+                New Materials Lab
             </a>
-
-            <div class="navbar__link-container">
-                <a class="navbar__link" href="research.html"> Research </a>
-                <a class="navbar__link navbar__link--active" href="publications.html"> Publications </a>
-                <!--<a class="navbar__link" href="index.html#people"> People </a> -->
-                <!--<a class="navbar__link" href="education.html"> Education </a> -->
-                <a href="javascript:void(0);" class="navbar__list-icon" onclick="toggleNavLinks()">
-                    <i class="fas fa-bars"></i>
-                </a>
+            <nav class="site-nav" id="site-nav" aria-label="Main">
+                <a href="research.html">Research</a>
+                <a href="index.html#now">Current work</a>
+                <a href="publications.html" aria-current="page">Publications</a>
+                <a href="downloads.html">Downloads</a>
+                <a href="index.html#people">Team</a>
+            </nav>
+            <div class="header-tools">
+                <button type="button" class="icon-button" id="theme-toggle" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+                    <span>Dark mode</span>
+                </button>
+                <button type="button" class="icon-button nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+                    <span>Menu</span>
+                </button>
             </div>
         </div>
-    </nav>
-    <body>
-        <section id="publications" class="page-hero">
-            <div class="flex-container flex-container--align-center">
-                <div class="row-50per">
-                    <div style="text-align: center;">
-                        <h3> Publications </h3>  
+    </header>
+
+    <main id="main">
+        <section class="page-hero">
+            <div class="container page-hero__inner">
+                <div class="page-hero__text">
+                    <h1>Publications</h1>
+                    <p>9 publications from 2018 to 2022. Search them, filter by year or topic, and open any abstract.</p>
+                </div>
+                <img src="images/publications.svg" alt="" width="140">
+            </div>
+        </section>
+        <section class="section" id="publication-list">
+            <div class="container">
+                <div class="filters">
+                    <div class="filters__row">
+                        <label class="filters__label" for="pub-search">Search</label>
+                        <input class="field" type="search" id="pub-search" placeholder="Title, author, journal or word in the abstract" autocomplete="off">
+                    </div>
+                    <div class="filters__row" role="group" aria-label="Filter by year">
+                        <span class="filters__label">Year</span>
+                        <button type="button" class="chip" data-filter="year" data-value="all" aria-pressed="true">All</button><button type="button" class="chip" data-filter="year" data-value="2022" aria-pressed="false">2022</button><button type="button" class="chip" data-filter="year" data-value="2021" aria-pressed="false">2021</button><button type="button" class="chip" data-filter="year" data-value="2019" aria-pressed="false">2019</button><button type="button" class="chip" data-filter="year" data-value="2018" aria-pressed="false">2018</button>
+                    </div>
+                    <div class="filters__row" role="group" aria-label="Filter by topic">
+                        <span class="filters__label">Topic</span>
+                        <button type="button" class="chip" data-filter="topic" data-value="all" aria-pressed="true">All</button><button type="button" class="chip" data-filter="topic" data-value="thermo" aria-pressed="false">Thermoelectrics</button><button type="button" class="chip" data-filter="topic" data-value="ml" aria-pressed="false">Machine learning</button><button type="button" class="chip" data-filter="topic" data-value="solar" aria-pressed="false">Solar cells</button><button type="button" class="chip" data-filter="topic" data-value="ceramics" aria-pressed="false">Ceramics</button><button type="button" class="chip" data-filter="topic" data-value="catalysis" aria-pressed="false">Catalysis</button>
+                    </div>
+                    <div class="filters__row">
+                        <p class="filters__status" id="pub-status" role="status">Showing all 9 publications.</p>
+                        <button type="button" class="button button--ghost button--small" id="pub-reset" hidden>Clear filters</button>
                     </div>
                 </div>
-                <div class="row-50per">
-                    <img src="images/publications.svg" style="width:30%; margin-top:60px">
-                </div>
+                <h2 class="year-heading" data-year="2022">2022</h2>
+                <article class="work" data-year="2022" data-topics="thermo ml">
+                    <div class="work__meta"><ul class="tags"><li class="tag">Thermoelectrics</li><li class="tag">Machine learning</li></ul></div>
+                    <div class="work__body">
+                        <h3><a href="https://pubs.rsc.org/en/content/articlehtml/2022/ta/d2ta02180c">Unraveling the role of chemical composition in the lattice thermal conductivity of oxychalcogenides as thermoelectric materials</a></h3>
+                        <p class="work__authors">Ernesto J. Blancas, Jose J. Plata, Julia Santana, Felipe Lemus-Prieto, Antonio M. Márquez, and Javier Fdez. Sanz</p>
+                        <p class="work__journal">Journal of Materials Chemistry A</p>
+                        <details class="abstract">
+                            <summary>Abstract</summary>
+                            <p>Oxychalcogenides represent a large chemical space with potential application as thermoelectric materials due to their low thermal conductivity. However, the nature of this behaviour is still under debate. Understanding the origin of the anharmonicity of these materials is key to developing models that improves the efficiency of thermoelectric materials. In this work, we combine machine learning with first principles calculations to explore oxychalcogenides materials. Machine learning not only accelerates the prediction of the lattice thermal conductivity for large chemical spaces with high accuracy, but also catalyzes the development of design principles to discover new thermoelectric materials. Using this approach, lattice thermal conductivity has been directly connected to the effect of each species in the material, using atomic projections of the scattering rates. The role of the monovalent atom and the lone pair electron for the trivalent cation are discussed in detail. Based on this knowledge, it is possible to connect complex properties such as lattice thermal conductivity with a more manageable synthetic variable such as chemical composition. Using this strategy, we propose promising new oxychalcogenides such as BiOAgSe, which subsequently has been confirmed as having ultra-low lattice thermal conductivity and BiOAg0.5Cu0.5Se which presents a lower κl and promising properties for thermoelectricity.</p>
+                        </details>
+                        <div class="button-row">
+                            <a class="button button--ghost button--small" href="https://pubs.rsc.org/en/content/articlehtml/2022/ta/d2ta02180c">Read the article</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="work" data-year="2022" data-topics="thermo ml">
+                    <div class="work__meta"><ul class="tags"><li class="tag">Thermoelectrics</li><li class="tag">Machine learning</li></ul></div>
+                    <div class="work__body">
+                        <h3><a href="https://pubs.acs.org/doi/full/10.1021/acs.chemmater.2c00336">Charting the Lattice Thermal Conductivities of I–III–VI<sub>2</sub> Chalcopyrite Semiconductors</a></h3>
+                        <p class="work__authors">Jose J. Plata, Victor Posligua, Antonio M. Márquez, Javier Fernández Sanz, and Ricardo Grau-Crespo.</p>
+                        <p class="work__journal">Chemistry of Materials</p>
+                        <details class="abstract">
+                            <summary>Abstract</summary>
+                            <p>Chalcopyrite-structured semiconductors have promising potential as low-cost thermoelectric materials, but their thermoelectric figures of merit must be increased for practical applications. Understanding their thermal properties is important for engineering their thermal conductivities and achieving better thermoelectric behavior. We present here a theoretical investigation of the lattice thermal conductivities of 20 chalcopyrite semiconductors with an ABX<sub>2</sub> composition (I–III–VI<sub>2</sub>) (A = Cu or Ag; B = Al, Ga, In, or Tl; X = S, Se, or Te). To afford accurate predictions across this large family of compounds, we solve the Boltzmann transport equation with force constants derived from density functional theory calculations and machine learning-based regression algorithms, reducing by between 1 and 2 orders of magnitude the computational cost with respect to conventional approaches of the same accuracy. The results are in good agreement with available experimental data and allow us to rationalize the role of chemical composition, temperature, and nanostructuring in the thermal conductivities across this important family of semiconductors.</p>
+                        </details>
+                        <div class="button-row">
+                            <a class="button button--ghost button--small" href="https://pubs.acs.org/doi/full/10.1021/acs.chemmater.2c00336">Read the article</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="work" data-year="2022" data-topics="thermo ml">
+                    <div class="work__meta"><ul class="tags"><li class="tag">Thermoelectrics</li><li class="tag">Machine learning</li></ul></div>
+                    <div class="work__body">
+                        <h3><a href="https://pubs.acs.org/doi/full/10.1021/bk-2022-1416.ch001">Machine Learning Approaches for Accelerating the Discovery of Thermoelectric Materials</a></h3>
+                        <p class="work__authors">Luis M. Antunes, Vikram, Jose J. Plata, Anthony V. Powell, Keith T. Butler, and Ricardo Grau-Crespo*</p>
+                        <p class="work__journal">Machine Learning in Materials Informatics: Methods and Applications</p>
+                        <details class="abstract">
+                            <summary>Abstract</summary>
+                            <p>We provide here a summary of how machine learning techniques are being employed for the investigation of thermoelectric behaviour and for identifying new candidate thermoelectric materials. We show that while physics-based computational methods allow increasingly reliable prediction of the electron and phonon transport coefficients that determine the thermoelectric efficiency of materials, such methods are generally too expensive for high-throughput applications. Modern machine learning techniques, which make predictions based on existing data rather than on physical principles, can dramatically accelerate the computational design of thermoelectric materials. Using examples from recent literature, we provide an overview of the approaches that can be used for this purpose, identify the main trends and remaining challenges, and give our outlook for the future development of this field.</p>
+                        </details>
+                        <div class="button-row">
+                            <a class="button button--ghost button--small" href="https://pubs.acs.org/doi/full/10.1021/bk-2022-1416.ch001">Read the article</a>
+                        </div>
+                    </div>
+                </article>
+                <h2 class="year-heading" data-year="2021">2021</h2>
+                <article class="work" data-year="2021" data-topics="ceramics">
+                    <div class="work__meta"><ul class="tags"><li class="tag">Ceramics</li></ul></div>
+                    <div class="work__body">
+                        <h3><a href="https://pubs.acs.org/doi/10.1021/acsami.1c08832">High-Throughput Screening of the Thermoelastic Properties of Ultrahigh-Temperature Ceramics</a></h3>
+                        <p class="work__authors">Pinku Nath, Jose J. Plata, Julia Santana-Andreo, Ernesto J. Blancas, Antonio M. Márquez, and Javier Fernández Sanz</p>
+                        <p class="work__journal">ACS Applied Materials &amp; Interfaces</p>
+                        <details class="abstract">
+                            <summary>Abstract</summary>
+                            <p>Ultrahigh-temperature ceramics (UHTCs) are a group of materials with high technological interest because of their applications in extreme environments. However, their characterization at high temperatures represents the main obstacle for their fast development. Obstacles are found from an experimental point of view, where only few laboratories around the world have the resources to test these materials under extreme conditions, and also from a theoretical point of view, where actual methods are expensive and difficult to apply to large sets of materials. Here, a new theoretical high-throughput framework for the prediction of the thermoelastic properties of materials is introduced. This approach can be systematically applied to any kind of crystalline material, drastically reducing the computational cost of previous methodologies up to 80% approximately. This new approach combines Taylor expansion and density functional theory calculations to predict the vibrational free energy of any arbitrary strained configuration, which represents the bottleneck in other methods. Using this framework, elastic constants for UHTCs have been calculated in a wide range of temperatures with excellent agreement with experimental values, when available. Using the elastic constants as the starting point, other mechanical properties such a bulk modulus, shear modulus, or Poisson ratio have been also explored, including upper and lower limits for polycrystalline materials. Finally, this work goes beyond the isotropic mechanical properties and represents one of the most comprehensive and exhaustive studies of some of the most important UHTCs, charting their anisotropy and thermal and thermodynamical properties.</p>
+                        </details>
+                        <div class="button-row">
+                            <a class="button button--ghost button--small" href="https://pubs.acs.org/doi/10.1021/acsami.1c08832">Read the article</a>
+                            <a class="button button--small" href="UHTCs_data.tar" download>Download data here</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="work" data-year="2021" data-topics="solar">
+                    <div class="work__meta"><ul class="tags"><li class="tag">Solar cells</li></ul></div>
+                    <div class="work__body">
+                        <h3><a href="https://www.sciencedirect.com/science/article/abs/pii/S1359645420308831">Connecting experimental synthetic variables with the microstructure and electronic properties of doped ferroelectric perovskites for solar cell applications using high-throughput frameworks</a></h3>
+                        <p class="work__authors">Jose J. Plata, Antonio M. Márquez, Santiago Cuesta-López and Javier Fdez Sanz</p>
+                        <p class="work__journal">Acta Materialia</p>
+                        <details class="abstract">
+                            <summary>Abstract</summary>
+                            <p>Doping remains as the most used technique to photosensitize ferroelectric oxides for solar cell applications. However, optimizing these materials is still a challenge. First, many variables should be considered, for instance dopant nature and concentration, synthesis method or temperature. Second, all these variables should be connected with the microstructure of the solid solution and its optoelectronic properties. Here, a computational high-throughput framework that combines Boltzmann statistics with DFT calculations is presented as a solution to accelerate the optimization of these materials for solar cells applications. This approach has two main advantages: i) the automatic and systematic exploration of the configurational space and ii) the connection between processing and electronic properties through the description of changes in the microstructure of the material. One of the most studied doped-ferroelectric systems, [KNbO<sub>3</sub>]<sub>1-x</sub>[BaNi<sub>1/2</sub>Nb<sub>1/2</sub>O<sub>3-</sub>] is used as a study case. Our results not only agree with previous theoretical and experimental reports, but also explain the effect of some of the variables to consider when this material is synthesized in order to optimize their performance.</p>
+                        </details>
+                        <div class="button-row">
+                            <a class="button button--ghost button--small" href="https://www.sciencedirect.com/science/article/abs/pii/S1359645420308831">Read the article</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="work" data-year="2021" data-topics="catalysis">
+                    <div class="work__meta"><ul class="tags"><li class="tag">Catalysis</li></ul></div>
+                    <div class="work__body">
+                        <h3><a href="https://www.sciencedirect.com/science/article/abs/pii/S0920586120307938">Catalytic activity of PtCu intermetallic compound for CO oxidation: A theoretical insight</a></h3>
+                        <p class="work__authors">Javier Amaya Suárez, Jose. J. Plata, Antonio M. Márquez and Javier Fdez. Sanz</p>
+                        <p class="work__journal">Catalysis Today</p>
+                        <details class="abstract">
+                            <summary>Abstract</summary>
+                            <p>To understand the microscopic mechanism of the CO oxidation reaction at PtCu nanoparticles, which have unique geometric and electronic structures compared to their component metals, we present here a theoretical study, based on density functional theory calculations, of the main reaction steps of this reaction. We examine the O<sub>2</sub> dissociation, the CO adsorption and the CO + O<sub>2</sub> reaction at an atomic level and use the computed geometries, Bader charges, and vibrational frequencies to rationalize the role of the intermetallic nanoparticles surface structure on the experimentally observed much higher activity of these nanoparticles as catalysts of the preferential oxidation of CO. By comparing with clean Pt (111) surface and with different Cu-doped models of this same surface, our results show that, at the surface, the presence of Cu induces the segregation of CO molecules at Pt sites and of O<sub>2</sub> molecules at Cu sites. Contrarily to Pt surfaces, the unassisted O<sub>2</sub> dissociation has a high barrier at the intermetallic nanoparticle surface and proceeds through a CO-assisted mechanism in which the new CO bond is formed while the O–O bond is broken with a kinetic barrier much lower than on either Pt (111) or in Pt-doped surfaces. The particular structure of the intermetallic surface is shown to have a significant role in the low kinetic barrier for the reaction, allowing for an easy approach of the CO to the adsorbed O<sub>2</sub> molecule that permits an early transition state with a low energetic barrier.</p>
+                        </details>
+                        <div class="button-row">
+                            <a class="button button--ghost button--small" href="https://www.sciencedirect.com/science/article/abs/pii/S0920586120307938">Read the article</a>
+                        </div>
+                    </div>
+                </article>
+                <h2 class="year-heading" data-year="2019">2019</h2>
+                <article class="work" data-year="2019" data-topics="catalysis">
+                    <div class="work__meta"><ul class="tags"><li class="tag">Catalysis</li></ul></div>
+                    <div class="work__body">
+                        <h3><a href="https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/cphc.201900141">Understanding the Photocatalytic Properties of Pt/CeO<sub>x</sub>/TiO<sub>2</sub>: Structural Effects on Electronic and Optical Properties</a></h3>
+                        <p class="work__authors">Jose. J. Plata, E. R. Remesal, Jesús Graciani, Antonio M. Márquez, J. A. Rodríguez and Javier Fdez Sanz</p>
+                        <p class="work__journal">ChemPhysChem</p>
+                        <details class="abstract">
+                            <summary>Abstract</summary>
+                            <p>Ceria‐titania interfaces play a crucial role in different chemical processes but are especially promising for the photocatalytic splitting of water using light in the visible wavelength region when Pt is added to the system. However, the complexity of this hierarchical structure hampers the study of the origin of its outstanding properties. In this article, the structural, electronic and optoelectronic properties of CeO2/TiO2 systems containing 1D, 2D, and 3D particles of ceria are analyzed by means of density functional calculations. Adsorption sites and vacancy effects have been studied to model Pt adsorption. Density of states calculations and absorption spectra simulations explain the behavior of these systems. Finally, these models are used for the screening of other metals that can be combined with this heterostructure to potentially find more efficient water splitting photocatalysts.</p>
+                        </details>
+                        <div class="button-row">
+                            <a class="button button--ghost button--small" href="https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/cphc.201900141">Read the article</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="work" data-year="2019" data-topics="solar">
+                    <div class="work__meta"><ul class="tags"><li class="tag">Solar cells</li></ul></div>
+                    <div class="work__body">
+                        <h3><a href="https://pubs.rsc.org/en/content/articlelanding/2019/ta/c9ta11820a/unauth#!divAbstract">Photo-sensitizing thin-film ferroelectric oxides using materials databases and high-throughput calculations</a></h3>
+                        <p class="work__authors">Jose J. Plata, Javier Amaya-Suárez, Santiago Cuesta-López, Antonio M. Márquez and Javier Fdez Sanz</p>
+                        <p class="work__journal">Journal of Materials Chemistry A</p>
+                        <details class="abstract">
+                            <summary>Abstract</summary>
+                            <p>Conventional solar cell efficiency is usually limited by the Shockley–Queisser limit. This is not the case, however, for ferroelectric materials, which present spontaneous electric polarization that is responsible for their bulk photovoltaic effect. Even so, most ferroelectric oxides exhibit large band gaps, reducing the amount of solar energy that can be harvested. In this work, a high-throughput approach to tune the electronic properties of thin-film ferroelectric oxides is presented. Materials databases were systematically used to find substrates for the epitaxial growth of KNbO3 thin films, using topological and stability filters. Interface models were built and their electronic and optical properties were predicted. Strain and substrate–thin-film band interaction effects were examined in detail, in order to understand the interaction between both materials. We found substrates that significantly reduce the KNbO3 band gap, maintain KNbO3 polarization, and potentially present the right band alignment, favoring electron injection in the substrate/electrode. This methodology can be easily applied to other ferroelectric oxides, optimizing their band gaps and accelerating the development of new ferroelectric-based solar cells.</p>
+                        </details>
+                        <div class="button-row">
+                            <a class="button button--ghost button--small" href="https://pubs.rsc.org/en/content/articlelanding/2019/ta/c9ta11820a/unauth#!divAbstract">Read the article</a>
+                        </div>
+                    </div>
+                </article>
+                <h2 class="year-heading" data-year="2018">2018</h2>
+                <article class="work" data-year="2018" data-topics="catalysis">
+                    <div class="work__meta"><ul class="tags"><li class="tag">Catalysis</li></ul></div>
+                    <div class="work__body">
+                        <h3><a href="https://pubs.rsc.org/en/content/articlelanding/2018/cp/c8cp03706j#!divAbstract">Improving the activity of gold nanoparticles for the water-gas shift reaction using TiO2–Y2O3: an example of catalyst design</a></h3>
+                        <p class="work__authors">Jose J. Plata, Francisca Romer-Sarria, Javier Amaya-Suárez, Antonio M. Márquez, Óscar H. Laguna, José A. Odriozola, Javier Fdez. Sanz</p>
+                        <p class="work__journal">Physical Chemistry Chemical Physics</p>
+                        <details class="abstract">
+                            <summary>Abstract</summary>
+                            <p>In the last ten years, there has been an acceleration in the pace at which new catalysts for the water-gas shift reaction are designed and synthesized. Pt-based catalysts remain the best solution when only activity is considered. However, cost, operation temperature, and deactivation phenomena are important variables when these catalysts are scaled in industry. Here, a new catalyst, Au/TiO2–Y2O3, is presented as an alternative to the less selective Pt/oxide systems. Experimental and theoretical techniques are combined to design, synthesize, characterize and analyze the performance of this system. The mixed oxide demonstrates a synergistic effect, improving the activity of the catalyst not only at large-to-medium temperatures but also at low temperatures. This effect is related to the homogeneous dispersion of the vacancies that act both as nucleation centers for smaller and more active gold nanoparticles and as dissociation sites for water molecules. The calculated reaction path points to carboxyl formation as the rate-limiting step with an activation energy of 6.9 kcal mol−1, which is in quantitative agreement with experimental measurements and, to the best of our knowledge, it is the lowest activation energy reported for the water-gas shift reaction. This discovery demonstrates the importance of combining experimental and theoretical techniques to model and understand catalytic processes and opens the door to new improvements to reduce the operating temperature and the deactivation of the catalyst.</p>
+                        </details>
+                        <div class="button-row">
+                            <a class="button button--ghost button--small" href="https://pubs.rsc.org/en/content/articlelanding/2018/cp/c8cp03706j#!divAbstract">Read the article</a>
+                        </div>
+                    </div>
+                </article>
             </div>
         </section>
-        <section id="publication-list">
-            <div class="container">
-                <h2> 2022 </h2>
-                <div>
-                    <h3 style="font-size: 1.5em;">
-						Unraveling the role of chemical composition in the lattice thermal conductivity of oxychalcogenides as thermoelectric materials
-                        <a href="https://pubs.rsc.org/en/content/articlehtml/2022/ta/d2ta02180c" > [link] </a>
-                    </h3>
-                    <p>
-						Ernesto J. Blancas, Jose J. Plata, Julia Santana, Felipe Lemus-Prieto, Antonio M. Márquez, and Javier Fdez. Sanz
-                    </p>
-                    <p>
-                        Jornal of Materials Chemistry A
-                    </p>
-                    <p>
-						Oxychalcogenides represent a large chemical space with potential application as thermoelectric materials due to their low thermal conductivity. However, the nature of this behaviour is still under debate. Understanding the origin of the anharmonicity of these materials is key to developing models that improves the efficiency of thermoelectric materials. In this work, we combine machine learning with first principles calculations to explore oxychalcogenides materials. Machine learning not only accelerates the prediction of the lattice thermal conductivity for large chemical spaces with high accuracy, but also catalyzes the development of design principles to discover new thermoelectric materials. Using this approach, lattice thermal conductivity has been directly connected to the effect of each species in the material, using atomic projections of the scattering rates. The role of the monovalent atom and the lone pair electron for the trivalent cation are discussed in detail. Based on this knowledge, it is possible to connect complex properties such as lattice thermal conductivity with a more manageable synthetic variable such as chemical composition. Using this strategy, we propose promising new oxychalcogenides such as BiOAgSe, which subsequently has been confirmed as having ultra-low lattice thermal conductivity and BiOAg0.5Cu0.5Se which presents a lower κl and promising properties for thermoelectricity.
-                    </p>
-                </div>
-                <hr style="margin: 30px 0px;">
-                <div>
-                    <h3 style="font-size: 1.5em;">
-						Charting the Lattice Thermal Conductivities of I–III–VI<sub>2</sub> Chalcopyrite Semiconductors
-                        <a href="https://pubs.acs.org/doi/full/10.1021/acs.chemmater.2c00336" > [link] </a>
-                    </h3>
-                    <p>
-						Jose J. Plata, Victor Posligua, Antonio M. Márquez, Javier Fernández Sanz, and Ricardo Grau-Crespo.
-                    </p>
-                    <p>
-                        Chemistry of Materials
-                    </p>
-                    <p>
-                       Chalcopyrite-structured semiconductors have promising potential as low-cost thermoelectric materials, but their thermoelectric figures of merit must be increased for practical applications. Understanding their thermal properties is important for engineering their thermal conductivities and achieving better thermoelectric behavior. We present here a theoretical investigation of the lattice thermal conductivities of 20 chalcopyrite semiconductors with an ABX<sub>2</sub> composition (I–III–VI<sub>2</sub>) (A = Cu or Ag; B = Al, Ga, In, or Tl; X = S, Se, or Te). To afford accurate predictions across this large family of compounds, we solve the Boltzmann transport equation with force constants derived from density functional theory calculations and machine learning-based regression algorithms, reducing by between 1 and 2 orders of magnitude the computational cost with respect to conventional approaches of the same accuracy. The results are in good agreement with available experimental data and allow us to rationalize the role of chemical composition, temperature, and nanostructuring in the thermal conductivities across this important family of semiconductors.
-                    </p>
-                </div>
-                <hr style="margin: 30px 0px;">
-                <div>
-                    <h3 style="font-size: 1.5em;">
-						Machine Learning Approaches for Accelerating the Discovery of Thermoelectric Materials
-                        <a href="https://pubs.acs.org/doi/full/10.1021/bk-2022-1416.ch001" > [link] </a>
-                    </h3>
-                    <p>
-						Luis M. Antunes, Vikram, Jose J. Plata, Anthony V. Powell, Keith T. Butler, and Ricardo Grau-Crespo*
-                    </p>
-                    <p>
-                        Machine Learning in Materials Informatics: Methods and Applications
-                    </p>
-                    <p>
-						We provide here a summary of how machine learning techniques are being employed for the investigation of thermoelectric behaviour and for identifying new candidate thermoelectric materials. We show that while physics-based computational methods allow increasingly reliable prediction of the electron and phonon transport coefficients that determine the thermoelectric efficiency of materials, such methods are generally too expensive for high-throughput applications. Modern machine learning techniques, which make predictions based on existing data rather than on physical principles, can dramatically accelerate the computational design of thermoelectric materials. Using examples from recent literature, we provide an overview of the approaches that can be used for this purpose, identify the main trends and remaining challenges, and give our outlook for the future development of this field.
-                    </p>
-                </div>
-                <h2> 2021 </h2>
-                <div>
-                    <h3 style="font-size: 1.5em;">
-						High-Throughput Screening of the Thermoelastic Properties of Ultrahigh-Temperature Ceramics
-                        <a href="https://pubs.acs.org/doi/10.1021/acsami.1c08832" > [link] </a>
-                    </h3>
-                    <p>
-						Pinku Nath, Jose J. Plata, Julia Santana-Andreo, Ernesto J. Blancas, Antonio M. Márquez, and Javier Fernández Sanz
-                    </p>
-                    <p>
-                        ACS Applied Materials & Interfaces
-                    </p>
-                    <p>
-						Ultrahigh-temperature ceramics (UHTCs) are a group of materials with high technological interest because of their applications in extreme environments. However, their characterization at high temperatures represents the main obstacle for their fast development. Obstacles are found from an experimental point of view, where only few laboratories around the world have the resources to test these materials under extreme conditions, and also from a theoretical point of view, where actual methods are expensive and difficult to apply to large sets of materials. Here, a new theoretical high-throughput framework for the prediction of the thermoelastic properties of materials is introduced. This approach can be systematically applied to any kind of crystalline material, drastically reducing the computational cost of previous methodologies up to 80% approximately. This new approach combines Taylor expansion and density functional theory calculations to predict the vibrational free energy of any arbitrary strained configuration, which represents the bottleneck in other methods. Using this framework, elastic constants for UHTCs have been calculated in a wide range of temperatures with excellent agreement with experimental values, when available. Using the elastic constants as the starting point, other mechanical properties such a bulk modulus, shear modulus, or Poisson ratio have been also explored, including upper and lower limits for polycrystalline materials. Finally, this work goes beyond the isotropic mechanical properties and represents one of the most comprehensive and exhaustive studies of some of the most important UHTCs, charting their anisotropy and thermal and thermodynamical properties.  
-                    </p>
-                    <p>
-						<a href="./UHTCS_data.tar" > Download data here </a>
-                    </p>
-                </div>
-                <hr style="margin: 30px 0px;">
-                <div>
-                    <h3 style="font-size: 1.5em;">
-                        Connecting experimental synthetic variables with the microstructure and electronic properties of doped ferroelectric perovskites for solar cell applications using high-throughput frameworks 
-                        <a href="https://www.sciencedirect.com/science/article/abs/pii/S1359645420308831" > [link] </a>
-                    </h3>
-                    <p>
-                        Jose J. Plata, Antonio M. Márquez, Santiago Cuesta-López  and Javier Fdez Sanz
-                    </p>
-                    <p>
-                        Acta Materialia
-                    </p>
-                    <p>
-                        Doping remains as the most used technique to photosensitize ferroelectric oxides for solar cell applications. However, optimizing these materials is still a challenge. First, many variables should be considered, for instance dopant nature and concentration, synthesis method or temperature. Second, all these variables should be connected with the microstructure of the solid solution and its optoelectronic properties. Here, a computational high-throughput framework that combines Boltzmann statistics with DFT calculations is presented as a solution to accelerate the optimization of these materials for solar cells applications. This approach has two main advantages: i) the automatic and systematic exploration of the configurational space and ii) the connection between processing and electronic properties through the description of changes in the microstructure of the material. One of the most studied doped-ferroelectric systems, [KNbO<sub>3</sub>]<sub>1-x</sub>[BaNi<sub>1/2</sub>Nb<sub>1/2</sub>O<sub>3-</sub>] is used as a study case. Our results not only agree with previous theoretical and experimental reports, but also explain the effect of some of the variables to consider when this material is synthesized in order to optimize their performance.
-                    </p>
-                </div>
-                <hr style="margin: 30px 0px;">
-                <div>
-                    <h3 style="font-size: 1.5em;">
- 						Catalytic activity of PtCu intermetallic compound for CO oxidation: A theoretical insight
-                        <a href="https://www.sciencedirect.com/science/article/abs/pii/S0920586120307938" > [link] </a>
-                    </h3>
-                    <p>
-                        Javier Amaya Suárez, Jose. J. Plata, Antonio M. Márquez and Javier Fdez. Sanz
-                    </p>
-                    <p>
-                        Catalysis Today
-                    </p>
-                    <p>
-						To understand the microscopic mechanism of the CO oxidation reaction at PtCu nanoparticles, which have unique geometric and electronic structures compared to their component metals, we present here a theoretical study, based on density functional theory calculations, of the main reaction steps of this reaction. We examine the O<sub>2</sub> dissociation, the CO adsorption and the CO + O<sub>2</sub> reaction at an atomic level and use the computed geometries, Bader charges, and vibrational frequencies to rationalize the role of the intermetallic nanoparticles surface structure on the experimentally observed much higher activity of these nanoparticles as catalysts of the preferential oxidation of CO. By comparing with clean Pt (111) surface and with different Cu-doped models of this same surface, our results show that, at the surface, the presence of Cu induces the segregation of CO molecules at Pt sites and of O<sub>2</sub> molecules at Cu sites. Contrarily to Pt surfaces, the unassisted O<sub>2</sub> dissociation has a high barrier at the intermetallic nanoparticle surface and proceeds through a CO-assisted mechanism in which the new CO bond is formed while the Osingle bondO bond is broken with a kinetic barrier much lower than on either Pt (111) or in Pt-doped surfaces. The particular structure of the intermetallic surface is shown to have a significant role in the low kinetic barrier for the reaction, allowing for an easy approach of the CO to the adsorbed O<sub>2</sub> molecule that permits an early transition state with a low energetic barrier.
-                    </p>
-                </div>
-                <h2> 2019 </h2>
-                <div>
-                    <h3 style="font-size: 1.5em;">
-                        Understanding the Photocatalytic Properties of Pt/CeO<sub>x</sub>/TiO<sub>2</sub>: Structural Effects on Electronic and Optical Properties 
-                        <a href="https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/cphc.201900141" > [link] </a>
-                    </h3>
-                    <p>
-                        Jose. J. Plata,  E. R. Remesal, Jesús Graciani,  Antonio M. Márquez, J. A. Rodríguez and Javier Fdez Sanz
-                    </p>
-                    <p>
-                        ChemPhysChem
-                    </p>
-                    <p>
-                        Ceria‐titania interfaces play a crucial role in different chemical processes but are especially promising for the photocatalytic splitting of water using light in the visible wavelength region when Pt is added to the system. However, the complexity of this hierarchical structure hampers the study of the origin of its outstanding properties. In this article, the structural, electronic and optoelectronic properties of CeO2/TiO2 systems containing 1D, 2D, and 3D particles of ceria are analyzed by means of density functional calculations. Adsorption sites and vacancy effects have been studied to model Pt adsorption. Density of states calculations and absorption spectra simulations explain the behavior of these systems. Finally, these models are used for the screening of other metals that can be combined with this heterostructure to potentially find more efficient water splitting photocatalysts.                       
-                    </p>
-                </div>
-                <hr style="margin: 30px 0px;">
-                <div>
-                    <h3 style="font-size: 1.5em;">
-                        Photo-sensitizing thin-film ferroelectric oxides using materials databases and high-throughput calculations
-                        <a href="https://pubs.rsc.org/en/content/articlelanding/2019/ta/c9ta11820a/unauth#!divAbstract" > [link] </a>
+    </main>
 
-                    </h3>
-                    <p>
-                        Jose J. Plata, Javier Amaya-Suárez, Santiago Cuesta-López, Antonio M. Márquez and Javier Fdez Sanz
-                    </p>
-                    <p>
-                        Journal of Materials Chemsitry A
-                    </p>
-                    <p>
-                        Conventional solar cell efficiency is usually limited by the Shockley–Queisser limit. This is not the case, however, for ferroelectric materials, which present spontaneous electric polarization that is responsible for their bulk photovoltaic effect. Even so, most ferroelectric oxides exhibit large band gaps, reducing the amount of solar energy that can be harvested. In this work, a high-throughput approach to tune the electronic properties of thin-film ferroelectric oxides is presented. Materials databases were systematically used to find substrates for the epitaxial growth of KNbO3 thin films, using topological and stability filters. Interface models were built and their electronic and optical properties were predicted. Strain and substrate–thin-film band interaction effects were examined in detail, in order to understand the interaction between both materials. We found substrates that significantly reduce the KNbO3 band gap, maintain KNbO3 polarization, and potentially present the right band alignment, favoring electron injection in the substrate/electrode. This methodology can be easily applied to other ferroelectric oxides, optimizing their band gaps and accelerating the development of new ferroelectric-based solar cells.                    </p>
-                </div>
-                <h2> 2018 </h2>
-                <div>
-                    <h3 style="font-size: 1.5em;">
-                        Improving the activity of gold nanoparticles for the water-gas shift reaction using TiO2–Y2O3: an example of catalyst design
-                        <a href="https://pubs.rsc.org/en/content/articlelanding/2018/cp/c8cp03706j#!divAbstract" > [link] </a>
-                    </h3>
-                    <p>
-                        Jose J. Plata, Francisca Romer-Sarria, Javier Amaya-Suárez, Antonio M. Márquez, Óscar H. Laguna, José A. Odriozola, Javier Fdez. Sanz
-                    </p>
-                    <p>
-                        Physical Chemistry Chemical Physics
-                    </p>
-                    <p>
-                        In the last ten years, there has been an acceleration in the pace at which new catalysts for the water-gas shift reaction are designed and synthesized. Pt-based catalysts remain the best solution when only activity is considered. However, cost, operation temperature, and deactivation phenomena are important variables when these catalysts are scaled in industry. Here, a new catalyst, Au/TiO2–Y2O3, is presented as an alternative to the less selective Pt/oxide systems. Experimental and theoretical techniques are combined to design, synthesize, characterize and analyze the performance of this system. The mixed oxide demonstrates a synergistic effect, improving the activity of the catalyst not only at large-to-medium temperatures but also at low temperatures. This effect is related to the homogeneous dispersion of the vacancies that act both as nucleation centers for smaller and more active gold nanoparticles and as dissociation sites for water molecules. The calculated reaction path points to carboxyl formation as the rate-limiting step with an activation energy of 6.9 kcal mol−1, which is in quantitative agreement with experimental measurements and, to the best of our knowledge, it is the lowest activation energy reported for the water-gas shift reaction. This discovery demonstrates the importance of combining experimental and theoretical techniques to model and understand catalytic processes and opens the door to new improvements to reduce the operating temperature and the deactivation of the catalyst.
-                    </p>
-                </div>
-            </div>
-        </section>
-        <footer class="flex-container flex-container--row-wrap">
-
-            <ul class="inline-list" style="margin-right:auto">
-                <li ><img src="images/logos/europe.png" height=50 /></li>
-                <li style="margin: 0px 30px;"><img src="images/logos/mineco.png" height=50 /></li>
-                <li><img src="images/logos/junta.png" height= 50 /></li>
+    <footer class="site-footer">
+        <div class="container site-footer__inner">
+            <ul class="funders" aria-label="Funded by">
+                <li><img src="images/logos/europe.png" alt="European Commission" height="50"></li>
+                <li><img src="images/logos/mineco.png" alt="Gobierno de España" height="50"></li>
+                <li><img src="images/logos/junta.png" alt="Junta de Andalucía" height="50"></li>
             </ul>
-
-            <ul class=" inline-list inline-list--icons">
-                <li>
-                    <a href="https://www.facebook.com/New-Materials-Lab-204894653644394/">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                </li>
-                <li style="margin: 0px 30px;">
-                    <a href="https://twitter.com/NewMaterialsLab">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://github.com/NewMaterialsLab">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </li>
+            <ul class="social" aria-label="New Materials Lab elsewhere">
+                <li><a href="https://www.facebook.com/New-Materials-Lab-204894653644394/">Facebook</a></li>
+                <li><a href="https://twitter.com/NewMaterialsLab">Twitter</a></li>
+                <li><a href="https://github.com/NewMaterialsLab">GitHub</a></li>
             </ul>
+            <p class="site-footer__copy">© New Materials Lab 2020. All Rights Reserved</p>
+        </div>
+    </footer>
 
-            <div style="text-align: center; margin-top:30px;width:100%">
-                © New Materials Lab 2020. All Rights Reserved
-            </div>
-        </footer>
-        <script src="js/navbar.js"></script>
-    </body>
+    <script src="js/site.js"></script>
+</body>
 </html>
