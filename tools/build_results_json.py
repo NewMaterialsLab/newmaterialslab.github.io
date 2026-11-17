@@ -103,19 +103,25 @@ def tib2_experiment(workdir):
     names = {"0%, 45.097351%, 74.118042%": "C11", "49.01886%, 18.03894%, 56.079102%": "C33",
              "47.058105%, 67.059326%, 18.823242%": "C44", "92.941284%, 69.020081%, 12.940979%": "C13",
              "85.098267%, 32.940674%, 10.195923%": "C12"}
-    out = {}
+    out, lines = {}, {}
     for tag, points in paths:
         name = names.get(colour_of(tag, "stroke"))
-        if name and len(points) == 13:                                  # a circle marker
+        if not name:
+            continue
+        if len(points) == 13:                                           # a circle marker
             x, y = centre(points)
             if kelvin(x) > 2000 or gpa(y) > 700:                        # the legend sample
                 continue
             out.setdefault(name, []).append([round(kelvin(x)), round(gpa(y), 1)])
+        elif "C" not in re.search(r' d="([^"]*)"', tag).group(1):       # the calculated line (straight segments)
+            if name in lines:
+                sys.exit("TiB2_mod.pdf: more than one calculated line for %s" % name)
+            lines[name] = [[round(kelvin(x)), round(gpa(y), 1)] for x, y in points]
     for name in out:
         out[name].sort()
-    if sorted(out) != ["C11", "C12", "C13", "C33", "C44"]:
-        sys.exit("TiB2_mod.pdf: did not find the five experimental series")
-    return {"points_K_GPa": out, "source": "RES/TiB2_mod.pdf"}
+    if sorted(out) != ["C11", "C12", "C13", "C33", "C44"] or sorted(lines) != sorted(out):
+        sys.exit("TiB2_mod.pdf: did not find the five experimental series and their calculated lines")
+    return {"points_K_GPa": out, "lines_K_GPa": lines, "source": "RES/TiB2_mod.pdf"}
 
 
 def cosb3_transport(workdir):

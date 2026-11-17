@@ -26,6 +26,11 @@
     function tip(node, text) { node.appendChild(el('title', {}, text)); return node; }
     function byId(id) { return document.getElementById(id); }
     function sub(formula) { return formula.replace(/(\d)/g, function (d) { return '₀₁₂₃₄₅₆₇₈₉'[d]; }); }
+    function fmt(v) { return String(Number(Number(v).toPrecision(3))); }
+    function sci(log, unit) {
+        var exp = Math.floor(log + 1e-9);
+        return Math.pow(10, log - exp).toFixed(1) + ' × 10' + sup(exp) + (unit === undefined ? ' cm⁻³' : unit);
+    }
     function sup(n) { return String(n).replace(/-/g, '⁻').replace(/\d/g, function (d) { return '⁰¹²³⁴⁵⁶⁷⁸⁹'[d]; }); }
 
     /* Axes and grid. o: {height, x:[a,b], y:[a,b], yTicks, xTicks, xLog, yLog, xFormat, yFormat, xTitle, title, right, left, top, append, label} */
@@ -63,6 +68,7 @@
             var li = document.createElement('li');
             var swatch = document.createElement('i');
             if (item.dot) { swatch.className = 'legend__dot' + (item.dot === 'filled' ? ' legend__dot--filled' : ''); swatch.style.color = item.colour; }
+            else if (item.tick) { swatch.className = 'legend__tick'; swatch.style.color = item.colour; }
             else { swatch.style.borderTopColor = item.colour; }
             li.appendChild(swatch);
             li.appendChild(document.createTextNode(item.label));
@@ -100,7 +106,7 @@
             var box = byId('conv-chart');
             box.textContent = '';
             [[d.kappa_W_mK, [0, 12], [0, 3, 6, 9, 12], 'Lattice thermal conductivity, W/(m·K)', ' W/(m·K)', 112, false],
-             [d.rmse_meV_A, [0, 80], [0, 40, 80], 'Force error, meV/Å', ' meV/Å', 128, true]].forEach(function (c) {
+             [d.rmse_meV_A, [0, 80], [0, 40, 80], 'Force error (RMSE), meV/Å', ' meV/Å', 128, true]].forEach(function (c) {
                 var f = frame(box, { height: c[5], x: [3, 19], y: c[1], yTicks: c[2], right: 40, append: true, top: 18,
                     xTicks: c[6] ? d.supercells : [], xTitle: c[6] ? 'Supercells in the training set' : '', title: c[3],
                     label: c[3] + ' of CoSb₃ against the number of supercells in the training set' });
@@ -166,10 +172,6 @@
         sN.value = best.j;
         var box = {};
 
-        function sci(log) {
-            var exp = Math.floor(log + 1e-9);
-            return Math.pow(10, log - exp).toFixed(1) + ' × 10' + sup(exp) + ' cm⁻³';
-        }
         function draw() {
             var i = Number(sT.value), j = Number(sN.value);
             var rect = canvas.getBoundingClientRect();
@@ -178,7 +180,7 @@
             canvas.width = Math.round(w * ratio);
             canvas.height = Math.round(h * ratio);
             ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-            box = { l: 44, t: 6, w: w - 44 - 16, h: h - 6 - 36 };
+            box = { l: 58, t: 6, w: w - 58 - 16, h: h - 6 - 36 };
             ctx.clearRect(0, 0, w, h);
             ctx.imageSmoothingEnabled = true;
             ctx.drawImage(cells, box.l, box.t, box.w, box.h);
@@ -195,6 +197,11 @@
             [300, 500, 750, 1000].forEach(function (t) { ctx.fillText(String(t), Math.min(box.l + (t - 300) / 700 * box.w, w - 14), box.t + box.h + 15); });
             ctx.fillStyle = '#F3F0FA';
             ctx.fillText('Temperature (K)', box.l + box.w / 2, h - 4);
+            ctx.save();
+            ctx.translate(12, box.t + box.h / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Carriers (cm⁻³)', 0, 0);
+            ctx.restore();
             var cx = box.l + i / (temps.length - 1) * box.w;
             var cy = box.t + box.h - j / (logn.length - 1) * box.h;
             ctx.strokeStyle = 'rgba(243,240,250,0.75)';
@@ -210,10 +217,9 @@
             ctx.strokeStyle = '#FFFFFF';
             ctx.stroke();
             byId('zt-value').textContent = d.zT[j][i].toFixed(2);
-            byId('zt-t-value').textContent = Math.round(temps[i]) + ' K';
-            byId('zt-n-value').textContent = sci(logn[j]);
+            byId('zt-where').textContent = 'at ' + Math.round(temps[i]) + ' K and ' + sci(logn[j]);
             byId('zt-t-out').textContent = Math.round(temps[i]) + ' K';
-            byId('zt-n-out').textContent = sci(logn[j]).replace(' cm⁻³', '');
+            byId('zt-n-out').textContent = sci(logn[j], '');
         }
         function point(event) {
             var rect = canvas.getBoundingClientRect();
@@ -260,29 +266,36 @@
             var f = frame(byId('tr-chart'), { height: PLOT_H, x: [1e16, 1e22], xLog: true, y: v.y, yLog: v.log, yTicks: v.ticks, zeroLine: v.zero, left: 46, right: 18,
                 xTicks: [1e16, 1e17, 1e18, 1e19, 1e20, 1e21, 1e22], xFormat: function (t) { return '10' + sup(Math.round(Math.log10(t))); },
                 xTitle: 'Carrier concentration (cm⁻³)', label: v.title + ' of CoSb₃ against carrier concentration, calculated and experimental, for p-type and n-type material' });
-            TYPES.forEach(function (t) {
+            /* Experiment first, then calculated on top (n-type, then p-type), as in the original figure. */
+            var layers = [['p', 'exp'], ['n', 'exp'], ['n', 'calc'], ['p', 'calc']];
+            var rows = [];
+            layers.forEach(function (layer) {
+                var t = layer[0] === 'p' ? TYPES[0] : TYPES[1];
                 var colour = series(t[2]);
-                var exp = d.series[t[0] + '_exp'][v.index];
-                var calc = d.series[t[0] + '_calc'][v.index];
-                exp.forEach(function (p) {
-                    f.svg.appendChild(tip(el('circle', { cx: f.x(Math.pow(10, p[0])), cy: f.y(p[1]), r: 3.5, 'class': 'marker', fill: 'var(--bg, #fff)', stroke: colour, 'stroke-width': 1.75, style: 'stroke:' + colour }),
-                        t[1] + ', experiment: ' + p[1] + ' ' + v.unit + ' at 10' + sup(p[0].toFixed(1)) + ' cm⁻³'));
-                });
-                f.svg.appendChild(el('path', { d: path(calc.map(function (p) { return [Math.pow(10, p[0]), p[1]]; }), f), stroke: colour, 'stroke-width': 1.25, 'stroke-opacity': 0.5,
-                    style: 'stroke:' + colour + ';stroke-width:1.25;stroke-opacity:0.5' }));
-                calc.forEach(function (p) {
-                    f.svg.appendChild(tip(el('circle', { cx: f.x(Math.pow(10, p[0])), cy: f.y(p[1]), r: 5, 'class': 'marker marker--calc', fill: colour, stroke: 'var(--bg, #fff)', 'stroke-width': 1.5, style: 'fill:' + colour }),
-                        t[1] + ', calculated: ' + p[1] + ' ' + v.unit + ' at 10' + sup(p[0].toFixed(0)) + ' cm⁻³'));
+                var calc = layer[1] === 'calc';
+                d.series[layer[0] + '_' + layer[1]][v.index].forEach(function (p) {
+                    var label = t[1] + ', ' + (calc ? 'calculated' : 'experiment') + ': ' + fmt(p[1]) + ' ' + v.unit + ' at ' + sci(p[0]);
+                    rows.push([t[1], calc ? 'Calculated' : 'Experiment', p[0], p[1]]);
+                    f.svg.appendChild(tip(el('circle', calc
+                        ? { cx: f.x(Math.pow(10, p[0])), cy: f.y(p[1]), r: 4, 'class': 'marker marker--calc', fill: colour, stroke: 'var(--bg, #fff)', 'stroke-width': 1.5, style: 'fill:' + colour }
+                        : { cx: f.x(Math.pow(10, p[0])), cy: f.y(p[1]), r: 3.5, 'class': 'marker', fill: 'var(--bg, #fff)', stroke: colour, 'stroke-width': 1.75, style: 'stroke:' + colour }), label));
                 });
             });
+            /* The same points as a table, for keyboard and screen-reader users. */
+            var table = byId('tr-table');
+            if (table) {
+                rows.sort(function (a, b) { return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : a[2] - b[2]; });
+                var html = '<thead><tr><th scope="col">Type</th><th scope="col">Source</th><th scope="col">Carriers (cm⁻³)</th><th scope="col">' + v.title + ' (' + v.unit + ')</th></tr></thead><tbody>';
+                rows.forEach(function (r) { html += '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + sci(r[2], '') + '</td><td>' + fmt(r[3]) + '</td></tr>'; });
+                table.innerHTML = html + '</tbody>';
+            }
         }
         segmented(byId('tr-views'), function (value) { view = value; draw(); });
         onResize(draw);
     }
 
     /* 4. TiB2: calculated elastic constants against the experimental points */
-    function tib2(exp, uhtc) {
-        var compound = uhtc.compounds.filter(function (c) { return c.formula === 'TiB2'; })[0];
+    function tib2(exp) {
         var names = [['C11', 'C₁₁', 1], ['C33', 'C₃₃', 2], ['C44', 'C₄₄', 3], ['C13', 'C₁₃', 4], ['C12', 'C₁₂', 5]];
         legend(byId('tib2-legend'), [{ label: 'Calculated', colour: INK }, { label: 'Experiment', colour: INK, dot: 'hollow' }]);
         onResize(function () {
@@ -290,7 +303,7 @@
                 xTicks: [0, 500, 1000, 1500, 2000], xTitle: 'Temperature (K)', label: 'Calculated and experimental elastic constants of TiB₂ against temperature, in GPa' });
             names.forEach(function (n) {
                 var colour = series(n[2]);
-                var line = uhtc.temperature.map(function (t, k) { return [t, compound.elastic[n[0]][k]]; }).filter(function (p) { return p[0] <= 2000; });
+                var line = exp.lines_K_GPa[n[0]];
                 f.svg.appendChild(el('path', { d: path(line, f), 'class': 'series', stroke: colour, 'stroke-width': 2, style: 'stroke:' + colour }));
                 exp.points_K_GPa[n[0]].forEach(function (p) {
                     f.svg.appendChild(tip(el('circle', { cx: f.x(p[0]), cy: f.y(p[1]), r: 3.5, 'class': 'marker', fill: 'var(--bg, #fff)', stroke: colour, 'stroke-width': 1.75, style: 'stroke:' + colour }),
@@ -308,10 +321,11 @@
         var select = byId('cer-prop');
         var temps = uhtc.temperature;
         slider.max = temps.length - 1;
+        slider.step = 5;
         slider.value = temps.indexOf(300);
         var families = { B: ['Borides', 1], C: ['Carbides', 2], N: ['Nitrides', 3] };
         legend(byId('cer-legend'), Object.keys(families).map(function (k) { return { label: families[k][0], colour: series(families[k][1]) }; })
-            .concat([{ label: 'Value at 0 K', colour: INK }]));
+            .concat([{ label: 'Value at 0 K', colour: INK, tick: true }]));
         function draw() {
             var i = Number(slider.value);
             var key = select.value;
@@ -341,10 +355,26 @@
         onResize(draw);
     }
 
+    /* Cu3TaTe4: one panel at a time; the link still opens all four together. */
+    (function () {
+        var group = byId('sc-views');
+        var img = document.querySelector('#fig-scattering .zoom img');
+        if (!group || !img) { return; }
+        var NAMES = { compound: 'Cu3TaTe4', ta: 'the Ta atoms', te: 'the four Te atoms', cu: 'the three Cu atoms' };
+        segmented(group, function (value) {
+            img.src = 'images/results-cu3tate4-' + value + '.png';
+            img.alt = 'Colour map of phonon scattering time against frequency for ' + NAMES[value] + ' in Cu3TaTe4';
+        });
+    })();
+
     function fail(ids) {
         ids.forEach(function (id) {
-            var node = byId(id);
-            if (node) { node.textContent = 'The data for this figure could not be loaded. Reload the page to try again.'; }
+            var fig = byId(id);
+            if (!fig) { return; }
+            fig.classList.add('is-failed');
+            Array.prototype.forEach.call(fig.querySelectorAll('.fig__fallback'), function (node) {
+                node.firstChild.textContent = 'The data for this figure could not be loaded. Reload the page to try again. ';
+            });
         });
     }
     function load(url) {
@@ -352,8 +382,7 @@
     }
     var results = load(root.getAttribute('data-results') || 'data/results.json');
     var uhtc = load(root.getAttribute('data-uhtc') || 'data/uhtc.json');
-    results.then(function (d) { convergence(d.cosb3_convergence); ztMap(d.cosb3_zt); transport(d.cosb3_transport); })
-        .catch(function () { fail(['conv-chart', 'tr-chart']); });
-    Promise.all([results, uhtc]).then(function (all) { tib2(all[0].tib2_experiment, all[1]); ceramics(all[1]); })
-        .catch(function () { fail(['tib2-chart', 'cer-chart']); });
+    results.then(function (d) { convergence(d.cosb3_convergence); ztMap(d.cosb3_zt); transport(d.cosb3_transport); tib2(d.tib2_experiment); })
+        .catch(function () { fail(['fig-training', 'fig-zt', 'fig-transport', 'fig-tib2']); });
+    uhtc.then(ceramics).catch(function () { fail(['fig-ceramics']); });
 })();

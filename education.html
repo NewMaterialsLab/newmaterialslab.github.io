@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Schibsted+Grotesk:wght@600;700&amp;display=swap">
-    <link rel="stylesheet" href="css/main.css?v=4d715ce0c5">
+    <link rel="stylesheet" href="css/main.css?v=46257945b2">
     <script>
         document.documentElement.classList.add('js');
         try { var t = localStorage.getItem('nml-theme'); if (t) { document.documentElement.setAttribute('data-theme', t); } } catch (e) {}
@@ -33,7 +33,7 @@
                 <a href="index.html#people">Team</a>
             </nav>
             <div class="header-tools">
-                <button type="button" class="icon-button" id="theme-toggle" aria-pressed="false">
+                <button type="button" class="icon-button js-only" id="theme-toggle" aria-pressed="false">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
                     <span>Dark mode</span>
                 </button>
@@ -96,6 +96,6 @@
         </div>
     </footer>
 
-    <script src="js/site.js?v=0a60d85fac"></script>
+    <script src="js/site.js?v=4da8f515f2" onerror="document.documentElement.classList.add('js-failed')"></script>
 </body>
 </html>

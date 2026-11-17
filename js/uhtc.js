@@ -67,7 +67,7 @@
         var view = current();
         var temps = data.temperature;
         var width = Math.max(280, chartBox.clientWidth);
-        var height = Math.round(Math.min(280, Math.max(220, width * 0.6)));
+        var height = 240;
         var m = { top: 10, right: 44, bottom: 40, left: 44 };
         var plotW = width - m.left - m.right;
         var plotH = height - m.top - m.bottom;
@@ -114,7 +114,7 @@
         var ends = view.series.map(function (s) { return { label: s.label, y: y(s.values[s.values.length - 1]) }; })
             .sort(function (a, b) { return a.y - b.y; });
         for (var i = 1; i < ends.length; i += 1) {
-            if (ends[i].y - ends[i - 1].y < 14) { ends[i].y = ends[i - 1].y + 14; }
+            if (ends[i].y - ends[i - 1].y < 16) { ends[i].y = ends[i - 1].y + 16; }
         }
         ends.forEach(function (end) {
             svg.appendChild(el('text', { x: m.left + plotW + 6, y: end.y + 4, 'class': 'end-label', fill: 'var(--ink, #1B1437)' }, end.label));
@@ -280,7 +280,9 @@
         });
         render();
     }).catch(function () {
-        chartBox.textContent = 'The chart data could not be loaded. Reload the page, or download the full archive above.';
-        csvButton.disabled = true;
+        host.classList.add('is-failed');
+        Array.prototype.forEach.call(host.querySelectorAll('.fig__fallback'), function (node) {
+            node.firstChild.textContent = 'The chart data could not be loaded. Reload the page, or use the full data set: ';
+        });
     });
 })();

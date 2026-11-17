@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Schibsted+Grotesk:wght@600;700&amp;display=swap">
-    <link rel="stylesheet" href="css/main.css?v=4d715ce0c5">
+    <link rel="stylesheet" href="css/main.css?v=46257945b2">
     <script>
         document.documentElement.classList.add('js');
         try { var t = localStorage.getItem('nml-theme'); if (t) { document.documentElement.setAttribute('data-theme', t); } } catch (e) {}
@@ -32,7 +32,7 @@
                 <a href="index.html#people">Team</a>
             </nav>
             <div class="header-tools">
-                <button type="button" class="icon-button" id="theme-toggle" aria-pressed="false">
+                <button type="button" class="icon-button js-only" id="theme-toggle" aria-pressed="false">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
                     <span>Dark mode</span>
                 </button>
@@ -77,7 +77,7 @@
                         </dl>
                         <div class="command" data-file="UHTCs_data.tar">
                             <code>wget https://www.newmaterialslab.com/UHTCs_data.tar</code>
-                            <button type="button" class="button button--ghost button--small" data-copy="wget https://www.newmaterialslab.com/UHTCs_data.tar">Copy command</button>
+                            <button type="button" class="button button--ghost button--small js-only" data-copy="wget https://www.newmaterialslab.com/UHTCs_data.tar">Copy command</button>
                         </div>
                     </li>
                 </ul>
@@ -91,7 +91,7 @@
                     <p>Plot the calculated elastic properties of any of the nine ceramics against temperature, straight from the data set above.</p>
                 </div>
                 <div class="explorer" id="uhtc-explorer" data-src="data/uhtc.json?v=d313fdffef">
-                    <p class="fig__fallback nojs-only">This chart needs JavaScript. The same values are in <a href="UHTCs_data.tar">UHTCs_data.tar</a> above.</p>
+                    <p class="fig__fallback" hidden>This chart needs JavaScript. The same values are in <a href="UHTCs_data.tar">UHTCs_data.tar</a> above.</p>
                     <div class="explorer__controls js-only">
                         <div>
                             <label for="uhtc-compound">Compound</label>
@@ -147,7 +147,7 @@
                         </dl>
                         <div class="command" data-file="RES/manuscript.pdf">
                             <code>wget https://www.newmaterialslab.com/RES/manuscript.pdf</code>
-                            <button type="button" class="button button--ghost button--small" data-copy="wget https://www.newmaterialslab.com/RES/manuscript.pdf">Copy command</button>
+                            <button type="button" class="button button--ghost button--small js-only" data-copy="wget https://www.newmaterialslab.com/RES/manuscript.pdf">Copy command</button>
                         </div>
                     </li>
                 </ul>
@@ -199,7 +199,7 @@
         </div>
     </footer>
 
-    <script src="js/site.js?v=0a60d85fac"></script>
-    <script src="js/uhtc.js?v=bb8158a320"></script>
+    <script src="js/site.js?v=4da8f515f2" onerror="document.documentElement.classList.add('js-failed')"></script>
+    <script src="js/uhtc.js?v=64123aee1c" onerror="document.documentElement.classList.add('js-failed')"></script>
 </body>
 </html>
