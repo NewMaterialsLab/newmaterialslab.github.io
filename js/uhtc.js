@@ -21,10 +21,10 @@
             file: 'elastic_constants',
             series: [
                 { key: 'C11', label: 'C₁₁', slot: 1 },
-                { key: 'C12', label: 'C₁₂', slot: 2 },
-                { key: 'C13', label: 'C₁₃', slot: 3 },
-                { key: 'C33', label: 'C₃₃', slot: 4 },
-                { key: 'C44', label: 'C₄₄', slot: 5 }
+                { key: 'C33', label: 'C₃₃', slot: 2 },
+                { key: 'C44', label: 'C₄₄', slot: 3 },
+                { key: 'C13', label: 'C₁₃', slot: 4 },
+                { key: 'C12', label: 'C₁₂', slot: 5 }
             ]
         },
         hill: {
@@ -39,10 +39,17 @@
     };
     var data = null;
     var state = { compound: 0, set: 'elastic', index: null };
+    var SERIES = ['#5A47C8', '#E0661A', '#0F9A8C', '#C08A00', '#D1365F'];
+    var summary = document.getElementById('uhtc-summary');
 
+    /* Presentation attributes are the fallback; the stylesheet's rules override them. */
     function el(name, attrs, text) {
         var node = document.createElementNS(SVG, name);
-        Object.keys(attrs || {}).forEach(function (key) { node.setAttribute(key, attrs[key]); });
+        var a = attrs || {};
+        if (name === 'text' && !a.fill) { a.fill = 'currentColor'; a['font-size'] = 12; }
+        if (name === 'line' && !a.stroke) { a.stroke = 'currentColor'; a['stroke-opacity'] = 0.25; }
+        if (name === 'path' && !a.fill) { a.fill = 'none'; a['stroke-width'] = 2; }
+        Object.keys(a).forEach(function (key) { node.setAttribute(key, a[key]); });
         if (text !== undefined) { node.textContent = text; }
         return node;
     }
@@ -51,7 +58,7 @@
         var compound = data.compounds[state.compound];
         var set = SETS[state.set];
         var series = set.series.filter(function (s) { return compound[state.set][s.key]; }).map(function (s) {
-            return { key: s.key, label: s.label, colour: 'var(--series-' + s.slot + ')', values: compound[state.set][s.key] };
+            return { key: s.key, label: s.label, colour: 'var(--series-' + s.slot + ', ' + SERIES[s.slot - 1] + ')', values: compound[state.set][s.key] };
         });
         return { compound: compound, set: set, series: series };
     }
@@ -59,9 +66,9 @@
     function render() {
         var view = current();
         var temps = data.temperature;
-        var width = Math.max(300, chartBox.clientWidth);
-        var height = 340;
-        var m = { top: 14, right: 58, bottom: 44, left: 48 };
+        var width = Math.max(280, chartBox.clientWidth);
+        var height = Math.round(Math.min(280, Math.max(220, width * 0.6)));
+        var m = { top: 10, right: 44, bottom: 40, left: 44 };
         var plotW = width - m.left - m.right;
         var plotH = height - m.top - m.bottom;
         var tMax = temps[temps.length - 1];
@@ -84,7 +91,7 @@
         });
 
         var svg = el('svg', {
-            viewBox: '0 0 ' + width + ' ' + height, width: width, height: height, tabindex: '0', role: 'img',
+            viewBox: '0 0 ' + width + ' ' + height, width: width, height: height, tabindex: '0', role: 'img', color: 'var(--muted, #55506B)',
             'aria-label': title.textContent + ' against temperature from 0 to ' + tMax + ' K. Use the left and right arrow keys to read values, or open the table below.'
         });
 
@@ -100,7 +107,7 @@
 
         view.series.forEach(function (s) {
             var d = s.values.map(function (value, i) { return (i ? 'L' : 'M') + x(temps[i]).toFixed(1) + ' ' + y(value).toFixed(1); }).join('');
-            svg.appendChild(el('path', { d: d, 'class': 'series', style: 'stroke:' + s.colour }));
+            svg.appendChild(el('path', { d: d, 'class': 'series', stroke: s.colour, style: 'stroke:' + s.colour }));
         });
 
         /* Labels at the line ends, nudged apart so they never overlap. */
@@ -110,14 +117,14 @@
             if (ends[i].y - ends[i - 1].y < 14) { ends[i].y = ends[i - 1].y + 14; }
         }
         ends.forEach(function (end) {
-            svg.appendChild(el('text', { x: m.left + plotW + 8, y: end.y + 4, 'class': 'end-label' }, end.label));
+            svg.appendChild(el('text', { x: m.left + plotW + 6, y: end.y + 4, 'class': 'end-label', fill: 'var(--ink, #1B1437)' }, end.label));
         });
 
         /* Hover and keyboard readout */
         var cursor = el('line', { 'class': 'cursor', y1: m.top, y2: m.top + plotH, visibility: 'hidden' });
         svg.appendChild(cursor);
         var dots = view.series.map(function (s) {
-            var dot = el('circle', { r: 4.5, 'class': 'dot', style: 'fill:' + s.colour, visibility: 'hidden' });
+            var dot = el('circle', { r: 4.5, 'class': 'dot', fill: s.colour, style: 'fill:' + s.colour, visibility: 'hidden' });
             svg.appendChild(dot);
             return dot;
         });
@@ -203,6 +210,32 @@
         });
         tableBox.textContent = '';
         tableBox.appendChild(table);
+
+        /* Side table: each quantity at four temperatures, in GPa. */
+        if (summary) {
+            var picks = [300, 1000, 2000, 3000];
+            var small = document.createElement('table');
+            small.className = 'data';
+            var hr = small.createTHead().insertRow();
+            ['', '300 K', '1000 K', '2000 K', '3000 K'].forEach(function (text, k) {
+                var th = document.createElement('th');
+                th.scope = 'col';
+                th.textContent = text;
+                if (!k) { th.setAttribute('aria-label', 'Quantity'); }
+                hr.appendChild(th);
+            });
+            var sb = small.createTBody();
+            view.series.forEach(function (s) {
+                var row = sb.insertRow();
+                var th = document.createElement('th');
+                th.scope = 'row';
+                th.textContent = s.label;
+                row.appendChild(th);
+                picks.forEach(function (t) { row.insertCell().textContent = s.values[temps.indexOf(t)].toFixed(0); });
+            });
+            summary.textContent = '';
+            summary.appendChild(small);
+        }
     }
 
     function downloadCsv() {
@@ -220,7 +253,7 @@
         setTimeout(function () { URL.revokeObjectURL(link.href); }, 1000);
     }
 
-    fetch('data/uhtc.json').then(function (response) {
+    fetch(host.getAttribute('data-src') || 'data/uhtc.json').then(function (response) {
         if (!response.ok) { throw new Error('HTTP ' + response.status); }
         return response.json();
     }).then(function (json) {
