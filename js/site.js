@@ -149,3 +149,31 @@
         box.querySelector('[data-copy]').setAttribute('data-copy', command);
     });
 })();
+
+/* Figures: select one to see it larger. */
+(function () {
+    'use strict';
+    var dialog = null;
+    document.addEventListener('click', function (event) {
+        var trigger = event.target.closest('.zoom');
+        if (!trigger) { return; }
+        if (!dialog) {
+            dialog = document.createElement('dialog');
+            dialog.className = 'lightbox';
+            var form = document.createElement('form');
+            form.method = 'dialog';
+            var close = document.createElement('button');
+            close.className = 'button button--small';
+            close.textContent = 'Close';
+            form.appendChild(close);
+            dialog.appendChild(form);
+            dialog.appendChild(document.createElement('img'));
+            dialog.addEventListener('click', function (e) { if (e.target === dialog) { dialog.close(); } });
+            document.body.appendChild(dialog);
+        }
+        var img = dialog.querySelector('img');
+        img.src = trigger.getAttribute('data-full');
+        img.alt = trigger.querySelector('img').alt;
+        if (dialog.showModal) { dialog.showModal(); } else { window.open(img.src, '_blank'); }
+    });
+})();
