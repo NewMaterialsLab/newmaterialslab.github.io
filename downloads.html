@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Downloads | New Materials Lab</title>
+    <meta name="description" content="Download data sets, manuscripts, potentials and scripts from New Materials Lab.">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Schibsted+Grotesk:wght@600;700&amp;display=swap">
+    <link rel="stylesheet" href="css/main.css">
+    <script>
+        try { var t = localStorage.getItem('nml-theme'); if (t) { document.documentElement.setAttribute('data-theme', t); } } catch (e) {}
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <a class="brand" href="index.html">
+                <img src="images/logo.png" alt="" width="34" height="34">
+                New Materials Lab
+            </a>
+            <nav class="site-nav" id="site-nav" aria-label="Main">
+                <a href="research.html">Research</a>
+                <a href="index.html#now">Current work</a>
+                <a href="publications.html">Publications</a>
+                <a href="downloads.html" aria-current="page">Downloads</a>
+                <a href="index.html#people">Team</a>
+            </nav>
+            <div class="header-tools">
+                <button type="button" class="icon-button" id="theme-toggle" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+                    <span>Dark mode</span>
+                </button>
+                <button type="button" class="icon-button nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+                    <span>Menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="page-hero">
+            <div class="container page-hero__inner">
+                <div class="page-hero__text">
+                    <h1>Downloads</h1>
+                    <p>The data and manuscripts behind our work, free to download. Our potentials and scripts will be added here as they are released.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="data">
+            <div class="container">
+                <div class="section__head">
+                    <h2>Data sets</h2>
+                </div>
+                <ul class="downloads">
+                    <li class="download">
+                        <div class="download__top">
+                            <div class="download__text">
+                                <h3>Thermoelastic properties of ultrahigh-temperature ceramics</h3>
+                                <p>Elastic constants, isentropic properties, mechanical properties and thermodynamic properties from 0 to 3000 K in steps of 10 K, for TiB<sub>2</sub>, ZrB<sub>2</sub>, HfB<sub>2</sub>, TiC, ZrC, HfC, TiN, ZrN and HfN.</p>
+                            </div>
+                            <a class="button" href="UHTCs_data.tar" download>Download (235 kB)</a>
+                        </div>
+                        <dl class="download__facts">
+                            <div><dt>File</dt><dd>UHTCs_data.tar</dd></div>
+                            <div><dt>Format</dt><dd>tar archive of bzip2-compressed text tables</dd></div>
+                            <div><dt>SHA-256</dt><dd>1b42578641facbf5dc280cfbb7792774158d84d354d96a9d4bbfb4e28be0c282</dd></div>
+                            <div><dt>Cite as</dt><dd>Pinku Nath, Jose J. Plata, Julia Santana-Andreo, Ernesto J. Blancas, Antonio M. Márquez, and Javier Fernández Sanz. <a href="https://pubs.acs.org/doi/10.1021/acsami.1c08832">High-Throughput Screening of the Thermoelastic Properties of Ultrahigh-Temperature Ceramics</a>. ACS Applied Materials &amp; Interfaces (2021).</dd></div>
+                        </dl>
+                        <div class="command" data-file="UHTCs_data.tar">
+                            <code>wget https://www.newmaterialslab.com/UHTCs_data.tar</code>
+                            <button type="button" class="button button--ghost button--small" data-copy="wget https://www.newmaterialslab.com/UHTCs_data.tar">Copy command</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section section--tint" id="explorer">
+            <div class="container">
+                <div class="section__head">
+                    <h2>Look inside the data</h2>
+                    <p>Plot the calculated elastic properties of any of the nine ceramics against temperature, straight from the data set above.</p>
+                </div>
+                <div class="explorer" id="uhtc-explorer">
+                    <div class="explorer__controls">
+                        <div>
+                            <label for="uhtc-compound">Compound</label>
+                            <select id="uhtc-compound"></select>
+                        </div>
+                        <fieldset>
+                            <legend>Property</legend>
+                            <div class="segmented">
+                                <button type="button" class="chip" data-set="elastic" aria-pressed="true">Elastic constants</button>
+                                <button type="button" class="chip" data-set="hill" aria-pressed="false">Polycrystal moduli</button>
+                            </div>
+                        </fieldset>
+                        <button type="button" class="button button--ghost button--small" id="uhtc-csv">Download this plot as CSV</button>
+                    </div>
+                    <p class="chart-title" id="uhtc-title">Loading the data</p>
+                    <ul class="legend" id="uhtc-legend"></ul>
+                    <div class="chart" id="uhtc-chart"></div>
+                    <details class="abstract">
+                        <summary>Show the values as a table</summary>
+                        <div class="table-scroll" id="uhtc-table"></div>
+                    </details>
+                    <p class="explorer__note">Calculated values from the published data set, plotted as they are in the files. The table lists every 100 K; the CSV has every 10 K.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="manuscripts">
+            <div class="container">
+                <div class="section__head">
+                    <h2>Manuscripts</h2>
+                </div>
+                <ul class="downloads">
+                    <li class="download">
+                        <div class="download__top">
+                            <div class="download__text">
+                                <h3>Unraveling the role of chemical composition in the lattice thermal conductivity of oxychalcogenides as thermoelectric materials</h3>
+                                <p>Author manuscript of the article published in Journal of Materials Chemistry A (2022). <a href="https://pubs.rsc.org/en/content/articlehtml/2022/ta/d2ta02180c">Read the published version</a>.</p>
+                            </div>
+                            <a class="button" href="RES/manuscript.pdf" download>Download (PDF, 1.8 MB)</a>
+                        </div>
+                        <dl class="download__facts">
+                            <div><dt>File</dt><dd>RES/manuscript.pdf</dd></div>
+                            <div><dt>Pages</dt><dd>11</dd></div>
+                            <div><dt>SHA-256</dt><dd>29ff588cba4785e324f2f7e74a3c53afcbf1cb63b3a6e9175117507d00f2b1b4</dd></div>
+                        </dl>
+                        <div class="command" data-file="RES/manuscript.pdf">
+                            <code>wget https://www.newmaterialslab.com/RES/manuscript.pdf</code>
+                            <button type="button" class="button button--ghost button--small" data-copy="wget https://www.newmaterialslab.com/RES/manuscript.pdf">Copy command</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section section--tint" id="potentials">
+            <div class="container">
+                <div class="section__head">
+                    <h2>Potentials and scripts</h2>
+                    <p>The interatomic potentials and the functions we use in our current work on grain boundaries.</p>
+                </div>
+                <!-- DRAFT COPY: placeholders until the files are ready.
+                     To publish a file: upload it to the repository, copy the "download" item from the
+                     Data sets section above, and fill in its name, description, size, format and SHA-256. -->
+                <ul class="downloads">
+                    <li class="download download--pending">
+                        <span class="status">In preparation</span>
+                        <div class="download__text">
+                            <h3>Interatomic potentials for grain boundary materials</h3>
+                            <p>We are fitting interatomic potentials for the materials we study. Each one will be published here with its format, the elements it covers and how it was trained.</p>
+                        </div>
+                    </li>
+                    <li class="download download--pending">
+                        <span class="status">In preparation</span>
+                        <div class="download__text">
+                            <h3>Simulation pipeline</h3>
+                            <p>The functions that build our structures and link established simulation programs into one workflow. They will be published here with instructions to run them.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container site-footer__inner">
+            <ul class="funders" aria-label="Funded by">
+                <li><img src="images/logos/europe.png" alt="European Commission" height="50"></li>
+                <li><img src="images/logos/mineco.png" alt="Gobierno de España" height="50"></li>
+                <li><img src="images/logos/junta.png" alt="Junta de Andalucía" height="50"></li>
+            </ul>
+            <ul class="social" aria-label="New Materials Lab elsewhere">
+                <li><a href="https://www.facebook.com/New-Materials-Lab-204894653644394/">Facebook</a></li>
+                <li><a href="https://twitter.com/NewMaterialsLab">Twitter</a></li>
+                <li><a href="https://github.com/NewMaterialsLab">GitHub</a></li>
+            </ul>
+            <p class="site-footer__copy">© New Materials Lab 2020. All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="js/site.js"></script>
+    <script src="js/uhtc.js"></script>
+</body>
+</html>
