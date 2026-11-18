@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Schibsted+Grotesk:wght@600;700&amp;display=swap">
-    <link rel="stylesheet" href="css/main.css?v=46257945b2">
+    <link rel="stylesheet" href="css/main.css?v=322c25240e">
     <script>
         document.documentElement.classList.add('js');
         try { var t = localStorage.getItem('nml-theme'); if (t) { document.documentElement.setAttribute('data-theme', t); } } catch (e) {}
@@ -128,6 +128,7 @@
                     <p>A few numbers from our calculations. The results page lets you explore the figures behind them.</p>
                 </div>
                 <ul class="keyfigs">
+                    <li><strong>0.23 eV</strong><span>Uncertainty of computed XPS peak separations with our best method</span></li>
                     <li><strong>zT ≈ 1.0</strong><span>Peak thermoelectric figure of merit calculated for p-type CoSb<sub>3</sub></span></li>
                     <li><strong>Up to 80%</strong><span>Lower computational cost for thermoelastic properties with our high-throughput framework</span></li>
                     <li><strong>10 to 100×</strong><span>Cheaper lattice thermal conductivity when force constants are learned by regression</span></li>
@@ -140,8 +141,14 @@
 
         <section class="section section--tint" id="mission">
             <div class="container split">
-                <figure class="stage">
-                    <img src="images/about-cluster.png" alt="Atomic model of a nanoparticle covered with ligand molecules" width="347" height="335">
+                <figure class="fig stage-3d" id="fig-cluster">
+                    <div class="molview-box js-only">
+                        <canvas class="molview molview--tall" data-structure="cluster" tabindex="0" role="img" aria-label="Rotatable 3D model of a copper sulfide nanocluster: six sulfur atoms form an octahedron, twelve copper atoms bridge its edges, and each copper carries a methylamine ligand. Drag or use the arrow keys to rotate."></canvas>
+                        <span class="molview-hint" aria-hidden="true">Drag to rotate</span>
+                    </div>
+                    <div class="nojs-only" hidden><img src="images/about-cluster.png" alt="Atomic model of a nanoparticle covered with ligand molecules" width="347" height="335"></div>
+                    <ul class="atom-key"><li><i style="background:#E3D23A"></i>S</li><li><i style="background:#A0642A"></i>Cu</li><li><i style="background:#2638D9"></i>N</li><li><i style="background:#2B2B2B"></i>C</li><li><i style="background:#EDEDED;box-shadow:inset 0 0 0 1px #999"></i>H</li></ul>
+                    <figcaption class="fig__caption">A copper sulfide nanocluster capped with methylamine ligands, rebuilt in 3D from our original picture with standard bond lengths.<span class="js-only"> Drag to spin it; double-click to reset.</span></figcaption>
                 </figure>
                 <div>
                     <div class="section__head">
@@ -197,9 +204,23 @@
             <div class="container">
                 <div class="section__head">
                     <h2>Publications</h2>
-                    <p>Our most relevant works, with the files you can download. The full list has all 9 publications with their abstracts.</p>
+                    <p>Our most relevant works, with the files you can download. The full list has all 10 publications with their abstracts.</p>
                 </div>
                 <ul class="works">
+                    <li class="work">
+                        <div class="work__meta"><strong>2026</strong><span>The Journal of Physical Chemistry Letters</span></div>
+                        <div class="work__body">
+                            <h3><a href="https://doi.org/10.1021/acs.jpclett.6c03008">Reconciling XPS Simulations and Experiments: New Approaches to Quantify and Minimize Core Level Binding Energy Errors in the Development of New Standards</a></h3>
+                            <p>Comparing peak separations within the same molecule removes the experimental charge-referencing error, so the uncertainty of each computational method can be measured. The best approach predicts O 1s to C 1s separations within 0.23 eV and guides the fit of real spectra.</p>
+                            <ul class="tags"><li class="tag">XPS</li></ul>
+                            <div class="button-row">
+                                <a class="button button--small" href="RES/xps_core_level_binding_energies_2026.pdf" download>Download the paper (PDF, 3.5 MB)</a>
+                                <a class="button button--ghost button--small" href="https://doi.org/10.5281/zenodo.16335623">Data on Zenodo</a>
+                                <a class="button button--ghost button--small" href="results.html#xps-methods">Explore the results</a>
+                                <a class="button button--ghost button--small" href="https://doi.org/10.1021/acs.jpclett.6c03008">Read the article</a>
+                            </div>
+                        </div>
+                    </li>
                     <li class="work">
                         <div class="work__meta"><strong>2022</strong><span>Journal of Materials Chemistry A</span></div>
                         <div class="work__body">
@@ -324,5 +345,6 @@
 
     <script src="js/site.js?v=4da8f515f2" onerror="document.documentElement.classList.add('js-failed')"></script>
     <script src="js/boundary.js?v=74586a93aa" onerror="document.documentElement.classList.add('js-failed')"></script>
+    <script src="js/molview.js?v=d030a4f49f" onerror="document.documentElement.classList.add('js-failed')"></script>
 </body>
 </html>

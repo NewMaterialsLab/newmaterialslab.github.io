@@ -7,6 +7,9 @@ The numbers are read out of the group's own figures in RES/:
                      converted with the axis frame (exact to the plot's precision).
   RES/CoSb3_AMSET.pdf  vector plot of three stacked panels. Markers are read from the
                      circle paths and converted with the figure's own tick marks.
+  RES/xps_core_level_binding_energies_2026.pdf  the open-access XPS paper (CC-BY 4.0). Figures 2-5
+                     are vector drawings: scatter markers, tick marks and the fitted spectra are read
+                     from them, and the method statistics are checked against the printed values.
   RES/TiB2_mod.pdf   vector plot. Experimental markers are taken from the circle
                      paths (the calculated lines come from UHTCs_data.tar instead).
   RES/CoSb3_zT.pdf   colour map stored as an image. Each cell is converted back to
@@ -200,6 +203,153 @@ def cosb3_transport(workdir):
             "source": "RES/CoSb3_AMSET.pdf"}
 
 
+
+XPS_PDF = RES / "xps_core_level_binding_energies_2026.pdf"
+XPS_BLUE = "rgb(12.199402%, 46.699524%, 70.599365%)"
+
+
+def page_shapes(pdf, page, workdir):
+    """Every path on one PDF page with its points in page coordinates."""
+    svg = Path(workdir) / ("%s-p%d.svg" % (pdf.stem, page))
+    subprocess.run(["pdftocairo", "-svg", "-f", str(page), "-l", str(page), str(pdf), str(svg)], check=True)
+    out = []
+    for tag in re.findall(r"<path[^>]*>", svg.read_text().split("</defs>")[-1]):
+        d = re.search(r' d="([^"]*)"', tag).group(1)
+        tr = re.search(r'transform="matrix\(([^)]*)\)"', tag)
+        nums = [float(v) for v in re.findall(r"-?\d+\.?\d*(?:e-?\d+)?", d)]
+        m = [float(v) for v in tr.group(1).split(",")] if tr else [1, 0, 0, 1, 0, 0]
+        pts = [(m[0] * x + m[2] * y + m[4], m[1] * x + m[3] * y + m[5]) for x, y in zip(nums[0::2], nums[1::2])]
+        xs = [p[0] for p in pts]; ys = [p[1] for p in pts]
+        out.append({"fill": colour_of(tag, "fill"), "stroke": colour_of(tag, "stroke"), "cmds": "".join(re.findall("[A-Za-z]", d)),
+                    "P": pts, "x0": min(xs), "x1": max(xs), "y0": min(ys), "y1": max(ys)})
+    return out
+
+
+def even(ticks, what):
+    steps = [abs(b - a) for a, b in zip(ticks, ticks[1:])]
+    if max(steps) - min(steps) > 0.06:
+        sys.exit("%s: ticks are not evenly spaced: %s" % (what, steps))
+
+
+def xps_methods(workdir):
+    """ΔE_theo against ΔE_exp for five methods (Figures 2-4 of the XPS paper).
+
+    Marker area encodes the weight ω of each pair (eq 3), so the weighted statistics of eqs 4 and 6
+    can be recomputed and checked against the values printed in the figures.
+    """
+    plots = {(4, 0): ("PBE-FS", [262, 260, 258, 256, 254, 252]), (4, 1): ("PBE-JS", [252, 250, 248, 246, 244]),
+             (5, 0): ("PBE-FSn", [262, 260, 258, 256, 254]), (5, 1): ("PBE-JSn", [252, 250, 248, 246, 244]),
+             (6, 0): ("LMBJ-JSn", [248, 246, 244, 242])}
+    printed = {"PBE-FS": (12.6, 1.7, 1.2), "PBE-JS": (2.9, 1.0, 0.7), "PBE-FSn": (12.18, 0.44, 0.31),
+               "PBE-JSn": (2.82, 0.23, 0.16), "LMBJ-JSn": (-0.25, 0.30, 0.21)}
+    xlabels = [242, 244, 246, 248]
+    methods = {}
+    for page in (4, 5, 6):
+        shapes = page_shapes(XPS_PDF, page, workdir)
+        segs = [e["P"] for e in shapes if e["stroke"] == "0%, 0%, 0%" and e["fill"] in (None, "none") and len(e["P"]) == 2]
+        spines = [(a, b) for a, b in segs if abs(a[0] - b[0]) < 1e-6 and abs(a[1] - b[1]) > 50]
+        marks = [((e["x0"] + e["x1"]) / 2, (e["y0"] + e["y1"]) / 2, (e["x1"] - e["x0"]) / 2)
+                 for e in shapes if e["fill"] == XPS_BLUE.replace("rgb(", "").rstrip(")") and e["cmds"].startswith("MCCCCC")]
+        boxes = set()
+        for a, b in spines:
+            x0, top, bot = a[0], min(a[1], b[1]), max(a[1], b[1])
+            right = [s[0][0] for s in spines if s[0][0] > x0 + 10 and abs(min(s[0][1], s[1][1]) - top) < 0.1]
+            if right and any(x0 < m[0] < min(right) and top < m[1] < bot for m in marks):
+                boxes.add((x0, min(right), top, bot))
+        for k, (x0, x1, top, bot) in enumerate(sorted(boxes)):
+            name, ylabels = plots[(page, k)]
+            inside = [m for m in marks if x0 < m[0] < x1 and top < m[1] < bot]
+            yt = sorted({round(a[1], 3) for a, b in segs if abs(a[0] - x0) < 0.05 and abs(a[1] - b[1]) < 1e-6 and 2 < abs(b[0] - a[0]) < 2.5 and top - 0.1 <= a[1] <= bot + 0.1})
+            xt = sorted({round(a[0], 3) for a, b in segs if abs(a[1] - bot) < 0.05 and abs(a[0] - b[0]) < 1e-6 and 2 < abs(b[1] - a[1]) < 2.5 and x0 - 0.1 <= a[0] <= x1 + 0.1})
+            if len(yt) != len(ylabels) or len(xt) != len(xlabels) or len(inside) != 32:
+                sys.exit("XPS %s: %d y ticks, %d x ticks, %d points" % (name, len(yt), len(xt), len(inside)))
+            even(yt, name); even(xt, name)
+            fx = lambda x: xlabels[0] + (x - xt[0]) * (xlabels[-1] - xlabels[0]) / (xt[-1] - xt[0])
+            fy = lambda y: ylabels[0] + (y - yt[0]) * (ylabels[-1] - ylabels[0]) / (yt[-1] - yt[0])
+            rmax = max(m[2] for m in inside)
+            weights = (0.5, 2 / 3, 0.75, 1.0)
+            pts = sorted([round(fx(m[0]), 3), round(fy(m[1]), 3), min(weights, key=lambda w: abs(w - (m[2] / rmax) ** 2))] for m in inside)
+            W = sum(p[2] for p in pts)
+            delta = sum(p[2] * (p[1] - p[0]) for p in pts) / W
+            neff = W ** 2 / sum(p[2] ** 2 for p in pts)
+            sigma = (neff / (neff - 1) * sum(p[2] * (p[1] - delta - p[0]) ** 2 for p in pts) / W) ** 0.5
+            ref = printed[name]
+            for got, want, label in ((delta, ref[0], "delta"), (sigma, ref[1], "sigma_dE"), (sigma / 2 ** 0.5, ref[2], "sigma_BE")):
+                if abs(got - want) > 0.051:
+                    sys.exit("XPS %s: %s %.3f does not match the printed %.2f" % (name, label, got, want))
+            methods[name] = {"points": pts, "delta": round(delta, 3), "sigma_dE": round(sigma, 3), "sigma_BE": round(sigma / 2 ** 0.5, 3)}
+    xs = [[p[0] for p in m["points"]] for m in methods.values()]
+    if any(max(abs(a - b) for a, b in zip(x, xs[0])) > 0.02 for x in xs):
+        sys.exit("XPS: the experimental values differ between plots")
+    return methods
+
+
+def xps_spectra(workdir):
+    """Experimental C 1s and O 1s spectra of anhydrous citric acid with the fitted components (Figure 5c,d)."""
+    shapes = page_shapes(XPS_PDF, 8, workdir)
+    black, red = "0%, 0%, 0%", "83.898926%, 15.299988%, 15.699768%"
+    roles = {"0.39978%, 45.098877%, 69.799805%": 0, "87.098694%, 56.098938%, 1.998901%": 1, "0.799561%, 61.999512%, 45.098877%": 2,
+             "79.998779%, 47.099304%, 73.699951%": 3, "50.19989%, 50.19989%, 50.19989%": "background", black: "envelope"}
+    panels = {
+        "C1s": {"box": (94.02, 299.29, 273.81, 414.67), "xl": [292, 290, 288, 286, 284, 282, 280], "yl": [0, 10, 20, 30, 40, 50, 60],
+                "names": ["C*OOH", "C*H2", "C*OH (central)"], "unit": "×10⁻² counts per channel"},
+        "O1s": {"box": (344.44, 549.71, 273.81, 414.67), "xl": [536, 534, 532, 530, 528, 526], "yl": [0, 2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20],
+                "names": ["CO*(OH)", "CO(O*H)", "O*H", "H2O (ads.)"], "unit": "×10⁻³ counts per channel"},
+    }
+    out = {}
+    for key, pn in panels.items():
+        L, R, T, B = pn["box"]
+        ticks = [e for e in shapes if e["fill"] == black and e["cmds"] == "MLLL" and max(e["x1"] - e["x0"], e["y1"] - e["y0"]) < 3]
+        xt = sorted((e["x0"] + e["x1"]) / 2 for e in ticks if L - 0.5 < e["x0"] and e["x1"] < R + 0.5 and abs(e["y1"] - B) < 0.3 and e["y1"] - e["y0"] > 1.5)
+        yt = sorted(((e["y0"] + e["y1"]) / 2 for e in ticks if abs(e["x0"] - L) < 0.3 and T - 0.5 < e["y0"] and e["y1"] < B + 0.5 and e["x1"] - e["x0"] > 1.5), reverse=True)
+        if len(xt) != len(pn["xl"]) or len(yt) != len(pn["yl"]):
+            sys.exit("XPS %s: found %d x ticks and %d y ticks" % (key, len(xt), len(yt)))
+        even(xt, key); even(yt, key)
+        fx = lambda x: pn["xl"][0] + (x - xt[0]) * (pn["xl"][-1] - pn["xl"][0]) / (xt[-1] - xt[0])
+        fy = lambda y: pn["yl"][0] + (y - yt[0]) * (pn["yl"][-1] - pn["yl"][0]) / (yt[-1] - yt[0])
+        data = sorted([round(fx((e["x0"] + e["x1"]) / 2), 3), round(fy((e["y0"] + e["y1"]) / 2), 3)] for e in shapes
+                      if e["fill"] == red and e["cmds"].startswith("MCCC") and e["x1"] - e["x0"] < 1.5 and L < e["x0"] < R and T < e["y0"] < B)
+        lo, hi = min(pn["xl"]), max(pn["xl"])
+        curves = {}
+        for e in shapes:
+            role = roles.get(e["fill"])
+            if role is None or len(e["P"]) < 300 or e["x1"] - e["x0"] < 150 or not (T - 5 < e["y0"] and e["y1"] < B + 5):
+                continue
+            if not L < (e["x0"] + e["x1"]) / 2 < R:    # lines run past the frame on both sides; their centre is inside it
+                continue
+            # Lines were exported as thin filled outlines: take the mean height of the outline in 0.1 eV columns,
+            # then resample on a 0.05 eV grid.
+            cols = {}
+            for x, y in e["P"]:
+                if L <= x <= R:
+                    cols.setdefault(round(fx(x) / 0.1), []).append(fy(y))
+            pts = sorted((k * 0.1, sum(v) / len(v)) for k, v in cols.items())
+            xs = [p[0] for p in pts]
+            line = []
+            for n in range(int(round((hi - lo) / 0.05)) + 1):
+                g = lo + n * 0.05
+                if xs[0] <= g <= xs[-1]:
+                    j = max(1, bisect.bisect_left(xs, g))
+                    (xa, ya), (xb, yb) = pts[j - 1], pts[j]
+                    line.append([round(g, 2), round(ya + (yb - ya) * (g - xa) / (xb - xa) if xb > xa else ya, 3)])
+            name = pn["names"][role] if isinstance(role, int) else role
+            if name in curves:
+                sys.exit("XPS %s: two curves for %s" % (key, name))
+            curves[name] = line
+        if set(curves) != set(pn["names"] + ["background", "envelope"]):
+            sys.exit("XPS %s: curves found %s" % (key, sorted(curves)))
+        grid = {k: dict((x, y) for x, y in v) for k, v in curves.items()}
+        common = set.intersection(*[set(g) for g in grid.values()])
+        resid = sorted(abs(grid["envelope"][x] - grid["background"][x] - sum(grid[n][x] - grid["background"][x] for n in pn["names"])) for x in common)
+        peak = max(grid["envelope"].values())
+        if resid[len(resid) // 2] > 0.01 * peak:
+            sys.exit("XPS %s: components do not add up to the envelope (median %.3f)" % (key, resid[len(resid) // 2]))
+        out[key] = {"unit": pn["unit"], "components": pn["names"], "data": data, "curves": curves}
+    # Table 1 of the paper: ΔBE (eV) from the highest-BE signal of each element, MD average and experiment
+    out["table1"] = {"C1s": {"reference": "C*OOH", "rows": [["C*OH (central)", 2.09, 2.36], ["C*H2", 3.96, 4.02]]},
+                     "O1s": {"reference": "CO(O*H)", "rows": [["O*H", 0.88, 0.70], ["CO*(OH)", 1.19, 1.46]]}}
+    return out
+
 def cosb3_zt(workdir):
     """zT of p-type CoSb3 on a temperature / carrier-concentration grid."""
     prefix = str(Path(workdir) / "zt")
@@ -238,6 +388,8 @@ def main():
         out = {"cosb3_convergence": cosb3_convergence(workdir),
                "tib2_experiment": tib2_experiment(workdir),
                "cosb3_transport": cosb3_transport(workdir),
+               "xps_methods": xps_methods(workdir),
+               "xps_spectra": xps_spectra(workdir),
                "cosb3_zt": cosb3_zt(workdir)}
     OUTPUT.write_text(json.dumps(out, separators=(",", ":")) + "\n")
     conv, zt = out["cosb3_convergence"], out["cosb3_zt"]
@@ -245,6 +397,11 @@ def main():
     print("  kappa:", conv["kappa_W_mK"], "rmse:", conv["rmse_meV_A"], "refs:", conv["reference_kappa_W_mK"])
     print("  TiB2 exp points:", {k: len(v) for k, v in out["tib2_experiment"]["points_K_GPa"].items()})
     print("  CoSb3 transport points per panel (rho, S, PF):", out["cosb3_transport"]["counts"])
+    for name, m in out["xps_methods"].items():
+        print("  XPS %-8s delta %.3f eV, sigma_dE %.3f eV, sigma_BE %.3f eV" % (name, m["delta"], m["sigma_dE"], m["sigma_BE"]))
+    for key in ("C1s", "O1s"):
+        sp = out["xps_spectra"][key]
+        print("  XPS %s: %d data points, curves %s" % (key, len(sp["data"]), ", ".join(sorted(sp["curves"]))))
     best = max((v, t, n) for n, row in zip(zt["log10_carriers_cm3"], zt["zT"]) for t, v in zip(zt["temperature_K"], row))
     print("  zT max %.2f at %g K, 10^%.2f cm-3; zT range %.2f..%.2f" % (best + (min(min(r) for r in zt["zT"]), best[0])))
 

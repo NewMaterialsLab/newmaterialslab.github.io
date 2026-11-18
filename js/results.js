@@ -367,6 +367,198 @@
         });
     })();
 
+    /* 6. XPS: how far each method's predicted peak separations scatter around experiment */
+    function xpsMethods(d) {
+        var ORDER = [['PBE-FS', 'PBE-FS'], ['PBE-JS', 'PBE-JS'], ['PBE-FSn', 'PBE-FSⁿ'], ['PBE-JSn', 'PBE-JSⁿ'], ['LMBJ-JSn', 'LMBJ-JSⁿ']];
+        var box = byId('xm-chart');
+        var view = 'corrected';
+        var selected = null;
+        var keys = d[ORDER[0][0]].points.map(function (p) { return p[0].toFixed(2); });
+        var unique = keys.filter(function (k, i) { return keys.indexOf(k) === i; }).sort(function (a, b) { return a - b; });
+        function err(m, p) { return view === 'corrected' ? p[1] - m.delta - p[0] : p[1] - p[0]; }
+        function readout() {
+            var out = byId('xm-readout');
+            if (selected === null) {
+                out.textContent = 'Point at a dot to follow the same pair through every method.';
+                return;
+            }
+            var n = keys.filter(function (k) { return k === selected; }).length;
+            var parts = ORDER.map(function (o) {
+                var m = d[o[0]];
+                var vals = m.points.filter(function (p) { return p[0].toFixed(2) === selected; }).map(function (p) { var e = err(m, p); return (e >= 0 ? '+' : '−') + Math.abs(e).toFixed(2); });
+                return o[1] + ' ' + vals.join(' / ');
+            });
+            out.textContent = 'ΔE(exp) ' + selected + ' eV' + (n > 1 ? ' (' + n + ' pairs)' : '') + ': ' + parts.join(' · ') + ' eV';
+        }
+        function draw() {
+            var corrected = view === 'corrected';
+            var rowH = 36;
+            var f = frame(box, { height: PLOT_H, x: corrected ? [-4, 4] : [-2, 18], y: [0, 1], left: 74, right: 66, top: 6,
+                xTicks: corrected ? [-4, -2, 0, 2, 4] : [-2, 2, 6, 10, 14, 18], xFormat: function (t) { return (t > 0 ? '+' : t < 0 ? '−' : '') + Math.abs(t); },
+                xTitle: corrected ? 'Error after removing each method’s shift δ̄ (eV)' : 'ΔE(theo) − ΔE(exp) (eV)',
+                label: 'Errors of 32 computed O 1s–C 1s energy separations for five methods; the spread shrinks from about 1.7 eV with PBE-FS to 0.23 eV with PBE-JSn' });
+            (corrected ? [-4, -2, 2, 4] : [2, 6, 10, 14, 18]).forEach(function (v) {
+                f.svg.appendChild(el('line', { x1: f.x(v), x2: f.x(v), y1: f.m.top, y2: f.m.top + f.plotH, 'class': 'grid' }));
+            });
+            f.svg.appendChild(el('line', { x1: f.x(0), x2: f.x(0), y1: f.m.top, y2: f.m.top + f.plotH, 'class': 'baseline', 'stroke-opacity': 0.6 }));
+            var trail = [];
+            ORDER.forEach(function (o, r) {
+                var m = d[o[0]];
+                var cy = f.m.top + rowH / 2 + r * (f.plotH / ORDER.length);
+                f.svg.appendChild(el('text', { x: f.m.left - 8, y: cy + 4, 'text-anchor': 'end', 'class': 'bar-label', fill: INK }, o[1]));
+                f.svg.appendChild(el('text', { x: f.m.left + f.plotW + 6, y: cy + 4, 'class': 'bar-label', fill: INK },
+                    corrected ? 'σ ' + m.sigma_dE.toFixed(2) : 'δ̄ ' + (m.delta < 0 ? '−' : '') + Math.abs(m.delta).toFixed(2)));
+                if (corrected) {
+                    f.svg.appendChild(el('rect', { x: f.x(-m.sigma_dE), y: cy - 11, width: f.x(m.sigma_dE) - f.x(-m.sigma_dE), height: 22, rx: 4,
+                        fill: series(1), 'fill-opacity': 0.12, style: 'fill:' + series(1) + ';fill-opacity:0.12' }));
+                }
+                m.points.forEach(function (p, i) {
+                    var e = err(m, p);
+                    var on = p[0].toFixed(2) === selected;
+                    var jitter = ((i * 7) % 5 - 2) * 2.2;
+                    var cx = f.x(Math.max(f === null ? 0 : (corrected ? -4 : -2), Math.min(corrected ? 4 : 18, e)));
+                    var dot = el('circle', { cx: cx, cy: cy + jitter, r: (on ? 1.6 : 1) * 3.6 * Math.sqrt(p[2]),
+                        fill: on ? ACCENT : INK, 'fill-opacity': on ? 1 : 0.5, stroke: on ? 'var(--bg, #fff)' : 'none', 'stroke-width': 1.5,
+                        style: 'fill:' + (on ? ACCENT : INK) + ';fill-opacity:' + (on ? 1 : 0.5), 'data-key': p[0].toFixed(2) });
+                    f.svg.appendChild(tip(dot, o[1] + ': ΔE(exp) ' + p[0].toFixed(2) + ' eV, error ' + (e >= 0 ? '+' : '−') + Math.abs(e).toFixed(2) + ' eV (weight ' + (Math.round(p[2] * 100) / 100) + ')'));
+                    if (on && trail.length === r) { trail.push([cx, cy + jitter]); }
+                });
+            });
+            if (trail.length > 1) {
+                f.svg.insertBefore(el('path', { d: trail.map(function (t, i) { return (i ? 'L' : 'M') + t[0].toFixed(1) + ' ' + t[1].toFixed(1); }).join(''),
+                    stroke: ACCENT, 'stroke-width': 1.5, 'stroke-dasharray': '3 3', style: 'stroke:' + ACCENT }), f.svg.firstChild.nextSibling);
+            }
+            f.svg.setAttribute('tabindex', '0');
+            f.svg.addEventListener('pointermove', function (event) {
+                var rect = f.svg.getBoundingClientRect();
+                var px = (event.clientX - rect.left) * (f.width / rect.width), py = (event.clientY - rect.top) * (PLOT_H / rect.height);
+                var best = null, bestD = 18 * 18;
+                Array.prototype.forEach.call(f.svg.querySelectorAll('circle'), function (c) {
+                    var dx = c.cx.baseVal.value - px, dy = c.cy.baseVal.value - py;
+                    if (dx * dx + dy * dy < bestD) { bestD = dx * dx + dy * dy; best = c.getAttribute('data-key'); }
+                });
+                if (best && best !== selected) { selected = best; draw(); readout(); }
+            });
+            f.svg.addEventListener('keydown', function (event) {
+                if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') { return; }
+                event.preventDefault();
+                var i = selected === null ? -1 : unique.indexOf(selected);
+                i = Math.max(0, Math.min(unique.length - 1, i + (event.key === 'ArrowRight' ? 1 : -1)));
+                selected = unique[i];
+                draw(); readout();
+                var svg = box.querySelector('svg');
+                if (svg) { svg.focus(); }
+            });
+        }
+        segmented(byId('xm-views'), function (value) { view = value; draw(); readout(); });
+        readout();
+        onResize(draw);
+    }
+
+    /* 7. XPS: the C 1s and O 1s spectra of solid citric acid, fitted with DFT-guided components */
+    function xpsSpectrum(d) {
+        var SLOTS = { C1s: [1, 2, 3], O1s: [1, 2, 3, 5] };
+        var LABELS = { 'C*OOH': 'C*OOH', 'C*H2': 'C*H₂', 'C*OH (central)': 'C*OH (central)', 'CO*(OH)': 'CO*(OH)', 'CO(O*H)': 'CO(O*H)', 'O*H': 'O*H', 'H2O (ads.)': 'H₂O (ads.)' };
+        var SIGMA = 0.23;
+        var key = 'C1s';
+        var hidden = {};
+        var showDft = true;
+        var box = byId('xs-chart');
+        var chips = byId('xs-components');
+        function peak(curve, bg) {
+            var best = null;
+            curve.forEach(function (p, i) { var v = p[1] - bg[i][1]; if (!best || v > best[1]) { best = [p[0], v]; } });
+            return best[0];
+        }
+        function buildChips() {
+            var sp = d[key];
+            chips.textContent = '';
+            sp.components.forEach(function (name, i) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.setAttribute('aria-pressed', hidden[name] ? 'false' : 'true');
+                var sw = document.createElement('i');
+                sw.style.background = series(SLOTS[key][i]);
+                b.appendChild(sw);
+                b.appendChild(document.createTextNode(LABELS[name] || name));
+                b.addEventListener('click', function () { hidden[name] = !hidden[name]; b.setAttribute('aria-pressed', hidden[name] ? 'false' : 'true'); draw(); });
+                chips.appendChild(b);
+            });
+            var t = document.createElement('button');
+            t.type = 'button';
+            t.setAttribute('aria-pressed', showDft ? 'true' : 'false');
+            var sw2 = document.createElement('i');
+            sw2.className = 'chip-dft';
+            t.appendChild(sw2);
+            t.appendChild(document.createTextNode('DFT positions ± 0.23 eV'));
+            t.addEventListener('click', function () { showDft = !showDft; t.setAttribute('aria-pressed', showDft ? 'true' : 'false'); draw(); });
+            chips.appendChild(t);
+        }
+        function draw() {
+            var sp = d[key];
+            var c = sp.curves;
+            var bg = c.background;
+            var lo = c.envelope[0][0], hi = c.envelope[c.envelope.length - 1][0];
+            var top = Math.ceil(Math.max.apply(null, sp.data.map(function (p) { return p[1]; })) * 1.08 / (key === 'C1s' ? 10 : 2.5)) * (key === 'C1s' ? 10 : 2.5);
+            var yTicks = [];
+            for (var v = 0; v <= top + 1e-9; v += key === 'C1s' ? 10 : 5) { yTicks.push(v); }
+            var xTicks = [];
+            for (var t = Math.ceil(lo); t <= hi; t += 2) { xTicks.push(t); }
+            var f = frame(box, { height: PLOT_H, x: [hi, lo], y: [0, top], yTicks: yTicks, xTicks: xTicks, left: 38, right: 12, top: 12,
+                xTitle: 'Binding energy (eV)', label: (key === 'C1s' ? 'C 1s' : 'O 1s') + ' spectrum of anhydrous citric acid at −140 °C with the fitted components and the DFT-predicted positions' });
+            var table = d.table1[key];
+            if (showDft) {
+                var ref = peak(c[table.reference], bg);
+                table.rows.forEach(function (row) {
+                    var at = ref - row[1];
+                    var i = sp.components.indexOf(row[0]);
+                    var colour = series(SLOTS[key][i]);
+                    f.svg.appendChild(el('rect', { x: f.x(at + SIGMA), y: f.m.top, width: f.x(at - SIGMA) - f.x(at + SIGMA), height: f.plotH,
+                        fill: colour, 'fill-opacity': 0.1, style: 'fill:' + colour + ';fill-opacity:0.1' }));
+                    f.svg.appendChild(tip(el('path', { d: 'M' + (f.x(at) - 5) + ' ' + f.m.top + 'h10l-5 8z', fill: colour, style: 'fill:' + colour }),
+                        (LABELS[row[0]] || row[0]) + ': DFT places it ' + row[1].toFixed(2) + ' eV below ' + (LABELS[table.reference] || table.reference) + '; the fit gives ' + row[2].toFixed(2) + ' eV'));
+                });
+                f.svg.appendChild(tip(el('path', { d: 'M' + (f.x(ref) - 5) + ' ' + f.m.top + 'h10l-5 8z', fill: INK, style: 'fill:' + INK }),
+                    (LABELS[table.reference] || table.reference) + ': reference peak'));
+            }
+            sp.components.forEach(function (name, i) {
+                if (hidden[name]) { return; }
+                var colour = series(SLOTS[key][i]);
+                var line = c[name];
+                var area = line.map(function (p, k) { return (k ? 'L' : 'M') + f.x(p[0]).toFixed(1) + ' ' + f.y(p[1]).toFixed(1); }).join('') +
+                    bg.slice().reverse().map(function (p) { return 'L' + f.x(p[0]).toFixed(1) + ' ' + f.y(p[1]).toFixed(1); }).join('') + 'Z';
+                f.svg.appendChild(el('path', { d: area, fill: colour, 'fill-opacity': 0.28, stroke: colour, 'stroke-width': 1.25, style: 'fill:' + colour + ';fill-opacity:0.28;stroke:' + colour }));
+            });
+            f.svg.appendChild(el('path', { d: path(bg, f), stroke: 'var(--muted, #55506B)', 'stroke-width': 1.25, 'stroke-dasharray': '4 3' }));
+            f.svg.appendChild(el('path', { d: path(c.envelope, f), stroke: INK, 'stroke-width': 1.75, style: 'stroke:' + INK }));
+            var g = el('g', { fill: INK, 'fill-opacity': 0.5, style: 'fill:' + INK + ';fill-opacity:0.5' });
+            sp.data.forEach(function (p) {
+                if (p[0] < lo || p[0] > hi) { return; }
+                g.appendChild(el('circle', { cx: f.x(p[0]).toFixed(1), cy: f.y(p[1]).toFixed(1), r: 1.4 }));
+            });
+            f.svg.appendChild(g);
+            var cursor = el('line', { y1: f.m.top, y2: f.m.top + f.plotH, 'class': 'cursor', 'stroke-dasharray': '3 3', visibility: 'hidden' });
+            f.svg.appendChild(cursor);
+            f.svg.addEventListener('pointermove', function (event) {
+                var rect = f.svg.getBoundingClientRect();
+                var px = (event.clientX - rect.left) * (f.width / rect.width);
+                var be = hi - (px - f.m.left) / f.plotW * (hi - lo);
+                var k = Math.round((be - lo) / 0.05);
+                if (k < 0 || k >= c.envelope.length) { return; }
+                cursor.setAttribute('x1', f.x(c.envelope[k][0])); cursor.setAttribute('x2', f.x(c.envelope[k][0])); cursor.setAttribute('visibility', 'visible');
+                var parts = sp.components.filter(function (n) { return !hidden[n]; }).map(function (n) { return (LABELS[n] || n) + ' ' + Math.max(0, c[n][k][1] - bg[k][1]).toFixed(1); });
+                byId('xs-readout').textContent = c.envelope[k][0].toFixed(2) + ' eV: envelope ' + c.envelope[k][1].toFixed(1) + (parts.length ? ' · ' + parts.join(' · ') : '');
+            });
+            f.svg.addEventListener('pointerleave', function () { cursor.setAttribute('visibility', 'hidden'); xsDefault(); });
+            byId('xs-unit').textContent = 'intensity, ' + sp.unit;
+        }
+        function xsDefault() { byId('xs-readout').textContent = 'Point at the spectrum to read the envelope and each component.'; }
+        segmented(byId('xs-views'), function (value) { key = value; hidden = {}; buildChips(); draw(); xsDefault(); });
+        buildChips();
+        xsDefault();
+        onResize(draw);
+    }
+
     function fail(ids) {
         ids.forEach(function (id) {
             var fig = byId(id);
@@ -382,7 +574,7 @@
     }
     var results = load(root.getAttribute('data-results') || 'data/results.json');
     var uhtc = load(root.getAttribute('data-uhtc') || 'data/uhtc.json');
-    results.then(function (d) { convergence(d.cosb3_convergence); ztMap(d.cosb3_zt); transport(d.cosb3_transport); tib2(d.tib2_experiment); })
-        .catch(function () { fail(['fig-training', 'fig-zt', 'fig-transport', 'fig-tib2']); });
+    results.then(function (d) { xpsMethods(d.xps_methods); xpsSpectrum(d.xps_spectra); convergence(d.cosb3_convergence); ztMap(d.cosb3_zt); transport(d.cosb3_transport); tib2(d.tib2_experiment); })
+        .catch(function () { fail(['fig-xps-methods', 'fig-xps-spectrum', 'fig-training', 'fig-zt', 'fig-transport', 'fig-tib2']); });
     uhtc.then(ceramics).catch(function () { fail(['fig-ceramics']); });
 })();
