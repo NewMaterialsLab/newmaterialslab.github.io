@@ -55,7 +55,8 @@
     function dist(p, q) { return Math.sqrt((p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1]) + (p[2] - q[2]) * (p[2] - q[2])); }
 
     /* The cluster pictured in About us, rebuilt from that picture: an octahedron of 6 sulfur atoms,
-       12 copper atoms bridging its 12 edges (a cuboctahedral shell), and a methylamine on each copper.
+       12 copper atoms bridging its 12 edges, and a methylamine on each copper. Each Cu(I) has three
+       bonds (2 S, 1 N) in a trigonal plane; each S bridges four Cu; N and C are tetrahedral.
        Distances are standard bond lengths (Cu–S 2.25, Cu–N 2.05, N–C 1.47, N–H 1.01, C–H 1.09 Å). */
     function cluster() {
         var atoms = [], links = [];
@@ -75,9 +76,8 @@
                 cu.push({ i: c, u: u });
             }
         }
-        cu.forEach(function (m, k) {
-            cu.forEach(function (n, l) { if (l > k && dist(atoms[m.i].p, atoms[n.i].p) < 3.1) { links.push({ a: m.i, b: n.i, kind: 'bond' }); } });
-        });
+        /* Neighbouring copper atoms are 2.98 Å apart, a weak Cu(I)···Cu(I) contact rather than a bond,
+           so no stick is drawn between them (the original picture draws none either). */
         /* A methylamine on each copper, pointing outwards; the methyl group leans sideways, as in the picture. */
         cu.forEach(function (m) {
             var u = m.u;
